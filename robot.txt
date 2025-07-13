@@ -1,0 +1,36 @@
+# AllInToolbox Robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow admin and config areas
+Disallow: /config/
+Disallow: /includes/
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /backup/
+Disallow: /logs/
+
+# Disallow search result pages to prevent duplicate content
+Disallow: /*/search.php
+Disallow: /*?q=
+Disallow: /*?search=
+
+# Allow all tools and converters
+Allow: /tr/araclar/
+Allow: /tr/cevirici/
+Allow: /en/tools/
+Allow: /en/converter/
+
+# Allow categories
+Allow: /tr/category/
+Allow: /en/category/
+
+# Allow main assets
+Allow: /assets/
+
+# Crawl delay (optional - remove if not needed)
+# Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://allintoolbox.com/sitemap.xml
