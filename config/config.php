@@ -4,9 +4,17 @@ define('BASE_URL', 'https://allintoolbox.com');
 define('SITE_NAME', 'AllInToolbox');
 define('SITE_DESCRIPTION', 'Free Online Calculators, Converters and Tools');
 
+
+// Dil dosyaları
+define('LANGUAGE_FILES', [
+    'tr' => 'languages/tr.php',
+    'en' => 'languages/en.php'
+]);
 // Dil ayarları
 define('DEFAULT_LANGUAGE', 'tr');
 define('SUPPORTED_LANGUAGES', ['tr', 'en']);
+
+
 
 // Veritabanı (gelecekte kullanım için)
 define('DB_HOST', 'localhost');
@@ -49,12 +57,12 @@ define('TOOLS_LIST', [
         'tr' => [
             'name' => 'BMI Hesaplayıcı',
             'description' => 'Vücut kitle indeksinizi hesaplayın',
-            'url' => '/tr/araclar/bmi-hesaplayici.php'
+            'url' => '/tools/bmi-calculator.php'
         ],
         'en' => [
             'name' => 'BMI Calculator',
             'description' => 'Calculate your Body Mass Index',
-            'url' => '/en/tools/bmi-calculator.php'
+            'url' => '/tools/bmi-calculator.php'
         ]
     ],
     'loan-calculator' => [
