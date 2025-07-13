@@ -2,6 +2,10 @@
 // Ana index.php - Dil yönlendirmesi
 session_start();
 
+// Konfigürasyon dosyalarını yükle
+require_once 'config/config.php';
+require_once 'config/functions.php';
+
 // Desteklenen diller
 $supported_languages = ['tr', 'en'];
 $default_language = 'tr';
@@ -21,15 +25,23 @@ else {
     $_SESSION['user_language'] = $selected_language;
 }
 
+// Dil klasörünün mevcut olup olmadığını kontrol et
+$target_dir = __DIR__ . '/' . $selected_language;
+if (!is_dir($target_dir)) {
+    // Eğer seçilen dil klasörü yoksa varsayılan dile yönlendir
+    $selected_language = $default_language;
+    $_SESSION['user_language'] = $selected_language;
+}
+
 // Seçilen dile yönlendir
 header("Location: /{$selected_language}/");
 exit();
 
 /**
- * Otomatik dil algılama
+ * Otomatik dil algılama fonksiyonu
  */
 function detectLanguage() {
-    global $default_language;
+    global $default_language, $supported_languages;
     
     // 1. Browser dil tercihi kontrol et
     if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
@@ -38,13 +50,9 @@ function detectLanguage() {
         foreach ($browser_languages as $lang) {
             $lang_code = substr(trim($lang), 0, 2);
             
-            // Türkçe tespit edilirse
-            if ($lang_code === 'tr') {
-                return 'tr';
-            }
-            // İngilizce tespit edilirse
-            elseif ($lang_code === 'en') {
-                return 'en';
+            // Desteklenen diller arasında var mı kontrol et
+            if (in_array($lang_code, $supported_languages)) {
+                return $lang_code;
             }
         }
     }
@@ -53,7 +61,7 @@ function detectLanguage() {
     $user_ip = getUserIP();
     
     // Localhost'ta varsayılan Türkçe
-    if ($user_ip === '127.0.0.1' || $user_ip === '::1') {
+    if ($user_ip === '127.0.0.1' || $user_ip === '::1' || $user_ip === '0.0.0.0') {
         return 'tr';
     }
     
@@ -70,6 +78,7 @@ function getUserIP() {
     foreach ($ip_keys as $key) {
         if (!empty($_SERVER[$key])) {
             $ip = $_SERVER[$key];
+            // Virgülle ayrılmış IP'ler varsa ilkini al (proxy durumu)
             if (strpos($ip, ',') !== false) {
                 $ip = explode(',', $ip)[0];
             }
