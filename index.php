@@ -1,5 +1,5 @@
 <?php
-// Ana index.php - Dil yönlendirmesi
+// Ana index.php - Dil yönlendirmesi (mevcut yapıya göre düzeltildi)
 session_start();
 
 // Konfigürasyon dosyalarını yükle
@@ -25,49 +25,20 @@ else {
     $_SESSION['user_language'] = $selected_language;
 }
 
-// Dil klasörünün mevcut olup olmadığını kontrol et
-$target_dir = __DIR__ . '/' . $selected_language;
-if (!is_dir($target_dir)) {
-    // Eğer seçilen dil klasörü yoksa varsayılan dile yönlendir
-    $selected_language = $default_language;
-    $_SESSION['user_language'] = $selected_language;
+// pages/home.php dosyasının mevcut olup olmadığını kontrol et
+$target_file = __DIR__ . '/pages/home.php';
+if (!file_exists($target_file)) {
+    // Eğer home.php yoksa 404
+    http_response_code(404);
+    echo "Home page not found!";
+    exit();
 }
 
-// Seçilen dile yönlendir
+// Seçilen dile göre home.php'ye yönlendir
 header("Location: /{$selected_language}/");
 exit();
 
-/**
- * Otomatik dil algılama fonksiyonu
- */
-function detectLanguage() {
-    global $default_language, $supported_languages;
-    
-    // 1. Browser dil tercihi kontrol et
-    if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-        $browser_languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        
-        foreach ($browser_languages as $lang) {
-            $lang_code = substr(trim($lang), 0, 2);
-            
-            // Desteklenen diller arasında var mı kontrol et
-            if (in_array($lang_code, $supported_languages)) {
-                return $lang_code;
-            }
-        }
-    }
-    
-    // 2. IP bazlı basit kontrol (opsiyonel)
-    $user_ip = getUserIP();
-    
-    // Localhost'ta varsayılan Türkçe
-    if ($user_ip === '127.0.0.1' || $user_ip === '::1' || $user_ip === '0.0.0.0') {
-        return 'tr';
-    }
-    
-    // 3. Varsayılan dil
-    return $default_language;
-}
+// detectLanguage() function is now in config/functions.php
 
 /**
  * Kullanıcı IP adresini al

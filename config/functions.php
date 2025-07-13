@@ -1,9 +1,8 @@
 <?php
-// config/functions.php
+// config/functions.php - Mevcut yapıya göre düzeltildi
 
 /**
- * Dil algılama fonksiyonu - YENİ VERSİYON
- * Query string, session ve browser'dan dil algılar
+ * Dil algılama fonksiyonu - URL ve query'den
  */
 function detectLanguage() {
     // Önce GET parametresinden kontrol et
@@ -54,7 +53,7 @@ function getCurrentLanguage() {
 }
 
 /**
- * Dil URL'si oluştur
+ * Dil URL'si oluştur - Mevcut yapıya göre düzeltildi
  */
 function getLanguageUrl($lang) {
     $currentUrl = $_SERVER['REQUEST_URI'];
@@ -99,7 +98,7 @@ function loadLanguage($lang) {
 }
 
 /**
- * Metin çevirisi fonksiyonu - YENİ VERSİYON
+ * Metin çevirisi fonksiyonu
  */
 function __($key, $lang = null) {
     if ($lang === null) {

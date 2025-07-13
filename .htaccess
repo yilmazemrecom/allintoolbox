@@ -1,0 +1,61 @@
+# AllInToolbox .htaccess - Mevcut Yapıya Göre
+
+RewriteEngine On
+
+# Force HTTPS (production için)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Ana sayfa yönlendirmeleri
+RewriteRule ^tr/?$ pages/home.php?lang=tr [L]
+RewriteRule ^en/?$ pages/home.php?lang=en [L]
+
+# Türkçe araçlar - tools klasörüne yönlendir
+RewriteRule ^tr/araclar/bmi-hesaplayici/?$ tools/bmi-calculator.php?lang=tr [L]
+RewriteRule ^tr/araclar/kredi-hesaplayici/?$ tools/loan-calculator.php?lang=tr [L]
+RewriteRule ^tr/araclar/qr-kod-uretici/?$ tools/qr-code-generator.php?lang=tr [L]
+RewriteRule ^tr/araclar/sifre-uretici/?$ tools/password-generator.php?lang=tr [L]
+RewriteRule ^tr/araclar/metin-analizi/?$ tools/text-analyzer.php?lang=tr [L]
+RewriteRule ^tr/araclar/yas-hesaplayici/?$ tools/age-calculator.php?lang=tr [L]
+RewriteRule ^tr/araclar/kalori-hesaplayici/?$ tools/calorie-calculator.php?lang=tr [L]
+
+# Türkçe çeviriciler - tools klasörüne yönlendir
+RewriteRule ^tr/cevirici/doviz-cevirici/?$ tools/currency-converter.php?lang=tr [L]
+RewriteRule ^tr/cevirici/olcu-birimi-cevirici/?$ tools/unit-converter.php?lang=tr [L]
+RewriteRule ^tr/cevirici/renk-kodu-cevirici/?$ tools/color-converter.php?lang=tr [L]
+
+# İngilizce araçlar - tools klasörüne yönlendir
+RewriteRule ^en/tools/bmi-calculator/?$ tools/bmi-calculator.php?lang=en [L]
+RewriteRule ^en/tools/loan-calculator/?$ tools/loan-calculator.php?lang=en [L]
+RewriteRule ^en/tools/qr-code-generator/?$ tools/qr-code-generator.php?lang=en [L]
+RewriteRule ^en/tools/password-generator/?$ tools/password-generator.php?lang=en [L]
+RewriteRule ^en/tools/text-analyzer/?$ tools/text-analyzer.php?lang=en [L]
+RewriteRule ^en/tools/age-calculator/?$ tools/age-calculator.php?lang=en [L]
+RewriteRule ^en/tools/calorie-calculator/?$ tools/calorie-calculator.php?lang=en [L]
+
+# İngilizce çeviriciler - tools klasörüne yönlendir
+RewriteRule ^en/converter/currency-converter/?$ tools/currency-converter.php?lang=en [L]
+RewriteRule ^en/converter/unit-converter/?$ tools/unit-converter.php?lang=en [L]
+RewriteRule ^en/converter/color-converter/?$ tools/color-converter.php?lang=en [L]
+
+# Statik sayfalar - pages klasörüne yönlendir
+RewriteRule ^tr/hakkinda/?$ pages/about.php?lang=tr [L]
+RewriteRule ^tr/iletisim/?$ pages/contact.php?lang=tr [L]
+RewriteRule ^tr/gizlilik/?$ pages/privacy.php?lang=tr [L]
+RewriteRule ^tr/kullanim-sartlari/?$ pages/terms.php?lang=tr [L]
+
+RewriteRule ^en/about/?$ pages/about.php?lang=en [L]
+RewriteRule ^en/contact/?$ pages/contact.php?lang=en [L]
+RewriteRule ^en/privacy/?$ pages/privacy.php?lang=en [L]
+RewriteRule ^en/terms/?$ pages/terms.php?lang=en [L]
+
+# Kategori sayfaları - pages klasörüne yönlendir
+RewriteRule ^tr/kategori/([^/]+)/?$ pages/category.php?lang=tr&category=$1 [L]
+RewriteRule ^en/category/([^/]+)/?$ pages/category.php?lang=en&category=$1 [L]
+
+# Ana dizin index.php'ye yönlendir (dil algılama için)
+RewriteRule ^$ index.php [L]
+
+# 404 için
+ErrorDocument 404 /pages/404.php
+

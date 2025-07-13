@@ -6,52 +6,6 @@ session_start();
 require_once '../config/config.php';
 require_once '../config/functions.php';
 
-// Dil al (URL'den veya query'den)
-$currentLang = $_GET['lang'] ?? detectLanguage();
-setLanguage($currentLang);
-
-// Sayfa meta bilgileri
-$pageTitle = __('bmi_title') . __('meta_title_suffix');
-$pageDescription = __('bmi_title') . ' - ' . __('bmi_subtitle');
-$pageKeywords = 'BMI, ' . __('category_health') . ', ' . __('calculate');
-
-// BMI hesaplama fonksiyonu
-function calculateBMI($weight, $height) {
-    $heightInMeters = $height / 100;
-    $bmi = $weight / ($heightInMeters * $heightInMeters);
-    return round($bmi, 1);
-}
-
-function getBMICategory($bmi) {
-    if ($bmi < 18.5) {
-        return ['category' => __('bmi_underweight'), 'class' => 'info', 'description' => __('bmi_underweight_desc')];
-    } elseif ($bmi < 25) {
-        return ['category' => __('bmi_normal'), 'class' => 'success', 'description' => __('bmi_normal_desc')];
-    } elseif ($bmi < 30) {
-        return ['category' => __('bmi_overweight'), 'class' => 'warning', 'description' => __('bmi_overweight_desc')];
-    } else {
-        return ['category' => __('bmi_obese'), 'class' => 'danger', 'description' => __('bmi_obese_desc')];
-    }
-}
-
-// Form işleme
-$result = null;
-$error = null;
-
-if ($_POST) {
-    $weight = isset($_POST['weight']) ? floatval($_POST['weight']) : 0;
-    $height = isset($_POST['height']) ? floatval($_POST['height']) : 0;
-    
-    if ($weight > 0 && $height > 0 && $weight <= 500 && $height >= 50 && $height <= 250) {
-        $bmi = calculateBMI($weight, $height);
-        $category =<?php
-// tools/bmi-calculator.php - Unified BMI Calculator
-session_start();
-
-// Konfigürasyonu yükle
-require_once '../config/config.php';
-require_once '../config/functions.php';
-
 // URL'den dil al
 $currentLang = detectLanguage();
 setLanguage($currentLang);
