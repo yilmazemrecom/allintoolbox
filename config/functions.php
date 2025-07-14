@@ -1,29 +1,21 @@
 <?php
-// config/functions.php - Mevcut yapıya göre düzeltildi
+// config/functions.php - TEMİZ VERSİYON
 
 /**
- * Dil algılama fonksiyonu - URL ve query'den
+ * Dil algılama
  */
 function detectLanguage() {
-    // Önce GET parametresinden kontrol et
+    // GET parametresinden
     if (isset($_GET['lang']) && in_array($_GET['lang'], SUPPORTED_LANGUAGES)) {
         return $_GET['lang'];
     }
     
-    // Session'dan kontrol et
+    // Session'dan
     if (isset($_SESSION['language']) && in_array($_SESSION['language'], SUPPORTED_LANGUAGES)) {
         return $_SESSION['language'];
     }
     
-    // URL'den kontrol et
-    $requestUri = $_SERVER['REQUEST_URI'];
-    foreach (SUPPORTED_LANGUAGES as $lang) {
-        if (preg_match('/^\/' . $lang . '(\/|$)/', $requestUri)) {
-            return $lang;
-        }
-    }
-    
-    // Browser dilini kontrol et
+    // Browser'dan
     if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         if (in_array($browserLang, SUPPORTED_LANGUAGES)) {
@@ -35,7 +27,7 @@ function detectLanguage() {
 }
 
 /**
- * Dil değiştirme fonksiyonu
+ * Dil ayarla
  */
 function setLanguage($lang) {
     if (in_array($lang, SUPPORTED_LANGUAGES)) {
@@ -53,24 +45,26 @@ function getCurrentLanguage() {
 }
 
 /**
- * Dil URL'si oluştur - Mevcut yapıya göre düzeltildi
+ * Dil URL'si oluştur - DÜZELTİLMİŞ
  */
-function getLanguageUrl($lang) {
+function getLanguageUrl($targetLang) {
     $currentUrl = $_SERVER['REQUEST_URI'];
-    $currentLang = getCurrentLanguage();
     
-    // Mevcut dil prefix'ini kaldır
-    $cleanUrl = str_replace('/' . $currentLang . '/', '/', $currentUrl);
-    if ($cleanUrl === '/' . $currentLang) {
-        $cleanUrl = '/';
+    // Query parametrelerini ayrıştır
+    $urlParts = parse_url($currentUrl);
+    $path = $urlParts['path'] ?? '/';
+    
+    // Özel durumlar için kontrol
+    if ($path === '/tr/' || $path === '/en/' || $path === '/') {
+        // Ana sayfa için
+        return "/?lang={$targetLang}";
     }
     
-    // Yeni dil prefix'ini ekle
-    if ($cleanUrl === '/') {
-        return '/' . $lang . '/';
-    } else {
-        return '/' . $lang . $cleanUrl;
-    }
+    // Diğer sayfalar için lang parametresini değiştir
+    parse_str($urlParts['query'] ?? '', $queryParams);
+    $queryParams['lang'] = $targetLang;
+    
+    return $path . '?' . http_build_query($queryParams);
 }
 
 /**
@@ -84,13 +78,7 @@ function loadLanguage($lang) {
         if (file_exists($langFile)) {
             $loadedLanguages[$lang] = include $langFile;
         } else {
-            // Fallback to default language
-            $defaultLangFile = __DIR__ . '/../languages/' . DEFAULT_LANGUAGE . '.php';
-            if (file_exists($defaultLangFile)) {
-                $loadedLanguages[$lang] = include $defaultLangFile;
-            } else {
-                $loadedLanguages[$lang] = [];
-            }
+            $loadedLanguages[$lang] = [];
         }
     }
     
@@ -98,7 +86,7 @@ function loadLanguage($lang) {
 }
 
 /**
- * Metin çevirisi fonksiyonu
+ * Çeviri fonksiyonu
  */
 function __($key, $lang = null) {
     if ($lang === null) {
@@ -106,29 +94,7 @@ function __($key, $lang = null) {
     }
     
     $translations = loadLanguage($lang);
-    
-    // Nested key support (örn: 'bmi.title')
-    if (strpos($key, '.') !== false) {
-        $keys = explode('.', $key);
-        $value = $translations;
-        foreach ($keys as $k) {
-            if (isset($value[$k])) {
-                $value = $value[$k];
-            } else {
-                return $key; // Key bulunamadı
-            }
-        }
-        return $value;
-    }
-    
     return $translations[$key] ?? $key;
-}
-
-/**
- * Kısa çeviri fonksiyonu (alias)
- */
-function t($key, $lang = null) {
-    return __($key, $lang);
 }
 
 /**
@@ -140,7 +106,14 @@ function getToolInfo($toolId, $lang = null) {
     }
     
     $tools = TOOLS_LIST;
-    return $tools[$toolId][$lang] ?? null;
+    $toolInfo = $tools[$toolId][$lang] ?? null;
+    
+    if ($toolInfo) {
+        // Basit URL - sadece query parameter
+        $toolInfo['url'] = "/tools/{$toolId}.php?lang={$lang}";
+    }
+    
+    return $toolInfo;
 }
 
 /**
@@ -156,7 +129,10 @@ function getToolsByCategory($category, $lang = null) {
     
     foreach ($tools as $id => $tool) {
         if ($tool['category'] === $category) {
-            $categoryTools[$id] = $tool[$lang];
+            $toolInfo = getToolInfo($id, $lang);
+            if ($toolInfo) {
+                $categoryTools[$id] = $toolInfo;
+            }
         }
     }
     
@@ -164,54 +140,10 @@ function getToolsByCategory($category, $lang = null) {
 }
 
 /**
- * URL slug oluştur
- */
-function createSlug($text) {
-    $text = strtolower($text);
-    $text = preg_replace('/[^a-z0-9\s-]/', '', $text);
-    $text = preg_replace('/[\s-]+/', '-', $text);
-    return trim($text, '-');
-}
-
-/**
  * Güvenli HTML çıktısı
  */
 function safeOutput($text) {
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-}
-
-/**
- * JSON response
- */
-function jsonResponse($data, $status = 200) {
-    http_response_code($status);
-    header('Content-Type: application/json');
-    echo json_encode($data);
-    exit;
-}
-
-/**
- * Form validation
- */
-function validateInput($value, $type = 'string', $required = true) {
-    if ($required && empty($value)) {
-        return false;
-    }
-    
-    switch ($type) {
-        case 'email':
-            return filter_var($value, FILTER_VALIDATE_EMAIL);
-        case 'number':
-            return is_numeric($value);
-        case 'float':
-            return filter_var($value, FILTER_VALIDATE_FLOAT);
-        case 'int':
-            return filter_var($value, FILTER_VALIDATE_INT);
-        case 'url':
-            return filter_var($value, FILTER_VALIDATE_URL);
-        default:
-            return true;
-    }
 }
 
 /**
@@ -242,12 +174,6 @@ function generateMetaTags($title = null, $description = null, $keywords = null, 
     echo '<meta name="description" content="' . safeOutput($description) . '">' . "\n";
     echo '<meta name="keywords" content="' . safeOutput($keywords) . '">' . "\n";
     echo '<link rel="canonical" href="' . safeOutput($canonical) . '">' . "\n";
-    
-    // Hreflang tags
-    foreach (SUPPORTED_LANGUAGES as $hrefLang) {
-        $hrefUrl = str_replace('/' . $lang . '/', '/' . $hrefLang . '/', $canonical);
-        echo '<link rel="alternate" hreflang="' . $hrefLang . '" href="' . safeOutput($hrefUrl) . '">' . "\n";
-    }
 }
 
 /**
@@ -262,7 +188,6 @@ function getCurrentUrl() {
  * Breadcrumb oluştur
  */
 function generateBreadcrumb($items) {
-    $lang = getCurrentLanguage();
     $output = '<nav aria-label="breadcrumb"><ol class="breadcrumb">';
     
     foreach ($items as $item) {

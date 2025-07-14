@@ -1,12 +1,19 @@
-# AllInToolbox .htaccess - Mevcut Yapıya Göre
+# AllInToolbox .htaccess - EN MİNİMAL HALİ
 
 RewriteEngine On
 
-# Force HTTPS (production için)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Ana sayfa
+RewriteRule ^$ index.php [L]
 
-# Ana sayfa yönlendirmeleri
+# Basit yönlendirmeler
 RewriteRule ^tr/?$ pages/home.php?lang=tr [L]
 RewriteRule ^en/?$ pages/home.php?lang=en [L]
 
+# Tools - sadece temel olanlar
+RewriteRule ^tools/bmi-calculator/?$ tools/bmi-calculator.php [L]
+RewriteRule ^tools/currency-converter/?$ tools/currency-converter.php [L]
+
+# 404 için fallback
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L]

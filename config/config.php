@@ -1,30 +1,27 @@
 <?php
-// config/config.php
+// config/config.php - MVP 10 TOOL VERSİYONU
+
 define('BASE_URL', 'https://allintoolbox.com');
 define('SITE_NAME', 'AllInToolbox');
-define('SITE_DESCRIPTION', 'Free Online Calculators, Converters and Tools');
 
-
-// Dil dosyaları
-define('LANGUAGE_FILES', [
-    'tr' => 'languages/tr.php',
-    'en' => 'languages/en.php'
-]);
 // Dil ayarları
 define('DEFAULT_LANGUAGE', 'tr');
 define('SUPPORTED_LANGUAGES', ['tr', 'en']);
 
+// Debug mode
+define('DEBUG_MODE', true);
 
-
-// Veritabanı (gelecekte kullanım için)
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'allintoolbox');
-define('DB_USER', 'username');
-define('DB_PASS', 'password');
+// Hata raporlama
+if (DEBUG_MODE) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+} else {
+    error_reporting(0);
+    ini_set('display_errors', 0);
+}
 
 // Reklam ayarları
-define('ADSENSE_CLIENT', 'ca-pub-XXXXXXXXXXXXXXXX');
-define('EZOIC_ENABLED', true);
+define('EZOIC_ENABLED', false); // Test için kapalı
 
 // Tool kategorileri
 define('TOOL_CATEGORIES', [
@@ -50,136 +47,125 @@ define('TOOL_CATEGORIES', [
     ]
 ]);
 
-// Tool listesi
+// Tool listesi - MVP 10 TOOL
 define('TOOLS_LIST', [
-    'bmi-calculator' => [
-        'category' => 'health',
-        'tr' => [
-            'name' => 'BMI Hesaplayıcı',
-            'description' => 'Vücut kitle indeksinizi hesaplayın',
-            'url' => '/tools/bmi-calculator.php'
-        ],
-        'en' => [
-            'name' => 'BMI Calculator',
-            'description' => 'Calculate your Body Mass Index',
-            'url' => '/tools/bmi-calculator.php'
-        ]
-    ],
+    // Finans (2)
     'loan-calculator' => [
         'category' => 'finance',
         'tr' => [
             'name' => 'Kredi Hesaplayıcı',
-            'description' => 'Kredi taksitlerini hesaplayın',
-            'url' => '/tr/araclar/kredi-hesaplayici.php'
+            'description' => 'Kredi taksit ve faiz hesaplama'
         ],
         'en' => [
             'name' => 'Loan Calculator',
-            'description' => 'Calculate loan payments',
-            'url' => '/en/tools/loan-calculator.php'
-        ]
-    ],
-    'qr-generator' => [
-        'category' => 'web',
-        'tr' => [
-            'name' => 'QR Kod Üretici',
-            'description' => 'QR kod oluşturun',
-            'url' => '/tr/araclar/qr-kod-uretici.php'
-        ],
-        'en' => [
-            'name' => 'QR Code Generator',
-            'description' => 'Generate QR codes',
-            'url' => '/en/tools/qr-code-generator.php'
+            'description' => 'Calculate loan payments and interest'
         ]
     ],
     'currency-converter' => [
-        'category' => 'converter',
+        'category' => 'finance',
         'tr' => [
             'name' => 'Döviz Çevirici',
-            'description' => 'Para birimlerini çevirin',
-            'url' => '/tr/cevirici/doviz-cevirici.php'
+            'description' => 'Para birimlerini çevirin'
         ],
         'en' => [
             'name' => 'Currency Converter',
-            'description' => 'Convert currencies',
-            'url' => '/en/converter/currency-converter.php'
+            'description' => 'Convert currencies'
         ]
     ],
-    'unit-converter' => [
-        'category' => 'converter',
+    
+    // Sağlık (2)
+    'bmi-calculator' => [
+        'category' => 'health',
         'tr' => [
-            'name' => 'Ölçü Birimi Çevirici',
-            'description' => 'Ölçü birimlerini çevirin',
-            'url' => '/tr/cevirici/olcu-birimi-cevirici.php'
+            'name' => 'BMI Hesaplayıcı',
+            'description' => 'Vücut kitle indeksinizi hesaplayın'
         ],
         'en' => [
-            'name' => 'Unit Converter',
-            'description' => 'Convert units',
-            'url' => '/en/converter/unit-converter.php'
-        ]
-    ],
-    'password-generator' => [
-        'category' => 'web',
-        'tr' => [
-            'name' => 'Şifre Üretici',
-            'description' => 'Güvenli şifre oluşturun',
-            'url' => '/tr/araclar/sifre-uretici.php'
-        ],
-        'en' => [
-            'name' => 'Password Generator',
-            'description' => 'Generate secure passwords',
-            'url' => '/en/tools/password-generator.php'
-        ]
-    ],
-    'color-converter' => [
-        'category' => 'converter',
-        'tr' => [
-            'name' => 'Renk Kodu Çevirici',
-            'description' => 'Renk kodlarını çevirin',
-            'url' => '/tr/cevirici/renk-kodu-cevirici.php'
-        ],
-        'en' => [
-            'name' => 'Color Code Converter',
-            'description' => 'Convert color codes',
-            'url' => '/en/converter/color-converter.php'
-        ]
-    ],
-    'text-analyzer' => [
-        'category' => 'utility',
-        'tr' => [
-            'name' => 'Metin Analizi',
-            'description' => 'Metin özelliklerini analiz edin',
-            'url' => '/tr/araclar/metin-analizi.php'
-        ],
-        'en' => [
-            'name' => 'Text Analyzer',
-            'description' => 'Analyze text properties',
-            'url' => '/en/tools/text-analyzer.php'
-        ]
-    ],
-    'age-calculator' => [
-        'category' => 'utility',
-        'tr' => [
-            'name' => 'Yaş Hesaplayıcı',
-            'description' => 'Yaşınızı hesaplayın',
-            'url' => '/tr/araclar/yas-hesaplayici.php'
-        ],
-        'en' => [
-            'name' => 'Age Calculator',
-            'description' => 'Calculate your age',
-            'url' => '/en/tools/age-calculator.php'
+            'name' => 'BMI Calculator',
+            'description' => 'Calculate your Body Mass Index'
         ]
     ],
     'calorie-calculator' => [
         'category' => 'health',
         'tr' => [
             'name' => 'Kalori Hesaplayıcı',
-            'description' => 'Günlük kalori ihtiyacınızı hesaplayın',
-            'url' => '/tr/araclar/kalori-hesaplayici.php'
+            'description' => 'Günlük kalori ihtiyacınızı hesaplayın'
         ],
         'en' => [
             'name' => 'Calorie Calculator',
-            'description' => 'Calculate daily calorie needs',
-            'url' => '/en/tools/calorie-calculator.php'
+            'description' => 'Calculate daily calorie needs'
+        ]
+    ],
+    
+    // Web Araçları (2)
+    'qr-code-generator' => [
+        'category' => 'web',
+        'tr' => [
+            'name' => 'QR Kod Üretici',
+            'description' => 'QR kod oluşturun'
+        ],
+        'en' => [
+            'name' => 'QR Code Generator',
+            'description' => 'Generate QR codes'
+        ]
+    ],
+    'password-generator' => [
+        'category' => 'web',
+        'tr' => [
+            'name' => 'Şifre Üretici',
+            'description' => 'Güvenli şifre oluşturun'
+        ],
+        'en' => [
+            'name' => 'Password Generator',
+            'description' => 'Generate secure passwords'
+        ]
+    ],
+    
+    // Çevirici (2)
+    'unit-converter' => [
+        'category' => 'converter',
+        'tr' => [
+            'name' => 'Ölçü Birimi Çevirici',
+            'description' => 'Uzunluk, ağırlık, sıcaklık çevirme'
+        ],
+        'en' => [
+            'name' => 'Unit Converter',
+            'description' => 'Convert length, weight, temperature'
+        ]
+    ],
+    'color-converter' => [
+        'category' => 'converter',
+        'tr' => [
+            'name' => 'Renk Kodu Çevirici',
+            'description' => 'HEX, RGB, HSL çevirme'
+        ],
+        'en' => [
+            'name' => 'Color Code Converter',
+            'description' => 'Convert HEX, RGB, HSL'
+        ]
+    ],
+    
+    // Pratik Araçlar (2)
+    'text-analyzer' => [
+        'category' => 'utility',
+        'tr' => [
+            'name' => 'Metin Analizi',
+            'description' => 'Kelime, karakter sayısı analizi'
+        ],
+        'en' => [
+            'name' => 'Text Analyzer',
+            'description' => 'Word and character count analysis'
+        ]
+    ],
+    'age-calculator' => [
+        'category' => 'utility',
+        'tr' => [
+            'name' => 'Yaş Hesaplayıcı',
+            'description' => 'Doğum tarihinizden yaşınızı hesaplayın'
+        ],
+        'en' => [
+            'name' => 'Age Calculator',
+            'description' => 'Calculate age from birth date'
         ]
     ]
 ]);
@@ -187,29 +173,17 @@ define('TOOLS_LIST', [
 // Meta bilgileri
 define('META_INFO', [
     'tr' => [
-        'title' => 'AllInToolbox - Ücretsiz Online Hesaplayıcı ve Çevirici Araçları',
-        'description' => 'BMI hesaplayıcı, kredi hesaplayıcı, QR kod üretici, döviz çevirici ve daha fazlası. Ücretsiz online araçlar.',
-        'keywords' => 'hesaplayıcı, çevirici, BMI, kredi, QR kod, döviz, online araçlar'
+        'title' => 'AllInToolbox - 10+ Ücretsiz Online Araç',
+        'description' => 'BMI hesaplayıcı, kredi hesaplayıcı, döviz çevirici, QR kod üretici ve daha fazlası.',
+        'keywords' => 'hesaplayıcı, çevirici, BMI, kredi, döviz, QR kod, şifre üretici, online araçlar'
     ],
     'en' => [
-        'title' => 'AllInToolbox - Free Online Calculators and Converter Tools',
-        'description' => 'BMI calculator, loan calculator, QR code generator, currency converter and more. Free online tools.',
-        'keywords' => 'calculator, converter, BMI, loan, QR code, currency, online tools'
+        'title' => 'AllInToolbox - 10+ Free Online Tools',
+        'description' => 'BMI calculator, loan calculator, currency converter, QR code generator and more.',
+        'keywords' => 'calculator, converter, BMI, loan, currency, QR code, password generator, online tools'
     ]
 ]);
 
 // Timezone
 date_default_timezone_set('Europe/Istanbul');
-
-// Debug mode (production'da false yapın)
-define('DEBUG_MODE', true);
-
-// Hata raporlama
-if (DEBUG_MODE) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-} else {
-    error_reporting(0);
-    ini_set('display_errors', 0);
-}
 ?>
