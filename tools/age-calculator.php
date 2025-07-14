@@ -85,7 +85,7 @@ include '../includes/header.php';
         <?php
         $breadcrumbItems = [
             ['title' => __('breadcrumb_home'), 'url' => '/' . $currentLang . '/'],
-            ['title' => __('breadcrumb_health_tools'), 'url' => '/' . $currentLang . '/category/health'],
+            ['title' => __('breadcrumb_health_tools'), 'url' => '/' . 'pages/category.php?category=utility'],
             ['title' => __('age_title')]
         ];
         echo generateBreadcrumb($breadcrumbItems);

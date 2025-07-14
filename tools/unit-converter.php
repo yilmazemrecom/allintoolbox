@@ -164,7 +164,7 @@ include '../includes/header.php';
         <?php
         $breadcrumbItems = [
             ['title' => ($currentLang === 'tr') ? 'Ana Sayfa' : 'Home', 'url' => '/?lang=' . $currentLang],
-            ['title' => ($currentLang === 'tr') ? 'Çevirici Araçları' : 'Converter Tools', 'url' => '/' . $currentLang . '/category/converter'],
+            ['title' => ($currentLang === 'tr') ? 'Çevirici Araçları' : 'Converter Tools', 'url' => '/' . 'pages/category.php?category=converter'],
             ['title' => $pageTitle]
         ];
         echo generateBreadcrumb($breadcrumbItems);

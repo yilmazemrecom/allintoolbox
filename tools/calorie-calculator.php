@@ -149,7 +149,7 @@ include '../includes/header.php';
         <?php
         $breadcrumbItems = [
             ['title' => ($currentLang === 'tr') ? 'Ana Sayfa' : 'Home', 'url' => '/?lang=' . $currentLang],
-            ['title' => ($currentLang === 'tr') ? 'Sağlık Araçları' : 'Health Tools', 'url' => '/' . $currentLang . '/category/health'],
+            ['title' => __('breadcrumb_health_tools'), 'url' => '/' . 'pages/category.php?category=health'],
             ['title' => $pageTitle]
         ];
         echo generateBreadcrumb($breadcrumbItems);
