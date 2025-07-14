@@ -8,6 +8,9 @@ require_once '../config/functions.php';
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
 
+// Sayfa meta bilgileri
+$pageTitle = __('loan_calculator_title') . __('meta_title_suffix');
+
 // Kredi hesaplama
 $result = null;
 $error = null;
@@ -41,6 +44,16 @@ include '../includes/header.php';
 
 <main class="main-content">
     <div class="container">
+        <!-- Breadcrumb -->
+                <?php
+        $breadcrumbItems = [
+            ['title' => __('breadcrumb_home'), 'url' => '/' . $currentLang . '/'],
+            ['title' => __('breadcrumb_finance_tools'), 'url' => '/' . $currentLang . '/category/finance'],
+            ['title' => __('loan_calculator_title')]
+        ];
+        echo generateBreadcrumb($breadcrumbItems);
+        ?>
+        
         <h1><i class="fas fa-calculator text-primary"></i> 
             <?php echo ($currentLang === 'tr') ? 'Kredi Hesaplayıcı' : 'Loan Calculator'; ?>
         </h1>

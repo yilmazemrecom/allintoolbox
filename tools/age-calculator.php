@@ -8,6 +8,12 @@ require_once '../config/functions.php';
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
 
+// Sayfa meta bilgileri
+$pageTitle = __('age_title') . __('meta_title_suffix');
+$pageDescription = __('age_description');
+$pageKeywords = 'age, ' . __('category_health') . ', ' . __('calculate');
+
+
 // Yaş hesaplama fonksiyonu
 function calculateAge($birthDate) {
     $birth = new DateTime($birthDate);
@@ -75,6 +81,15 @@ include '../includes/header.php';
 
 <main class="main-content">
     <div class="container">
+                <!-- Breadcrumb -->
+        <?php
+        $breadcrumbItems = [
+            ['title' => __('breadcrumb_home'), 'url' => '/' . $currentLang . '/'],
+            ['title' => __('breadcrumb_health_tools'), 'url' => '/' . $currentLang . '/category/health'],
+            ['title' => __('age_title')]
+        ];
+        echo generateBreadcrumb($breadcrumbItems);
+        ?>
         <h1><i class="fas fa-birthday-cake text-primary"></i> 
             <?php echo ($currentLang === 'tr') ? 'Yaş Hesaplayıcı' : 'Age Calculator'; ?>
         </h1>

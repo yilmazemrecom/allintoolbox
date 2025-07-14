@@ -176,4 +176,33 @@ return [
     'meta_title_suffix' => ' | AllInToolbox',
     'meta_description_default' => 'Ücretsiz online hesaplayıcı ve çevirici araçları. BMI hesaplayıcı, kredi hesaplayıcı, QR kod üretici ve daha fazlası.',
     'meta_keywords_default' => 'hesaplayıcı, çevirici, BMI, kredi, QR kod, döviz, online araçlar',
+
+    // Yaş Hesaplayıcı
+    'age_title' => 'Yaş Hesaplayıcı',
+    'age_description' => 'Doğum tarihinizi girerek yaşınızı, doğum gününüzü ve diğer yaş hesaplamalarını öğrenin.',
+    'age_birth_date' => 'Doğum Tarihi',
+    'age_next_birthday' => 'Sonraki Doğum Günü',
+    'age_years' => 'Yıl',
+    'age_months' => 'Ay',
+    'age_days' => 'Gün',
+    'age_hours' => 'Saat',
+    'age_minutes' => 'Dakika',
+    'age_seconds' => 'Saniye',
+    'age_calculate' => 'Yaşı Hesapla',
+    'age_result' => 'Yaş Sonucu',
+    'age_error' => 'Lütfen geçerli bir doğum tarihi girin!',
+    'age_success' => 'Yaş hesaplama başarılı!',
+    'age_invalid_date' => 'Geçersiz doğum tarihi!',
+    'age_next_birthday_info' => 'Sonraki doğum gününüz',
+    'age_next_birthday_date' => 'Sonraki doğum günü tarihi',
+    'age_next_birthday_days' => 'Sonraki doğum gününe kalan gün sayısı',
+
+    // Kredi Hesaplayıcı
+    'loan_calculator_title' => 'Kredi Hesaplayıcı',
+    'loan_calculator_description' => 'Kredi taksit ve faiz hesaplama aracı. Kredi tutarı, faiz oranı ve vade bilgilerini girerek aylık taksitlerinizi hesaplayın.',
+    'loan_principal' => 'Kredi Tutarı (₺)',
+    'loan_rate' => 'Yıllık Faiz Oranı (%)',
+    'loan_months' => 'Vade (Ay)',
+    'loan_calculate' => 'Kredi Hesapla',
+    'loan_error' => 'Lütfen geçerli bir kredi tutarı girin!',
 ];
