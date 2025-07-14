@@ -1,3 +1,9 @@
+<?php
+// includes/footer.php başına ekle:
+if (!isset($currentLang)) {
+    $currentLang = getCurrentLanguage();
+}
+?>
 </div> <!-- container end -->
     </main> <!-- main-content end -->
 
