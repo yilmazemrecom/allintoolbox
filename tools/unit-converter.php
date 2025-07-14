@@ -489,41 +489,114 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add to recent tools
         const toolName = currentLang === 'tr' ? 'Ölçü Birimi Çevirici' : 'Unit Converter';
-        AllInToolbox.tools.addRecentTool({
-            name: toolName,
-            url: window.location.href
-        });
+        const toolUrl = '/tools/unit-converter.php?lang=' + currentLang;
+        AllInToolbox.storage.addRecentTool('unit-converter', toolName, toolUrl);
     }
-});
-    // Update units based on category
-    updateUnits();
-
-function updateUnits() {
-    const categorySelect = document.getElementById('category');
-    const fromUnitSelect = document.getElementById('from_unit');
-    const toUnitSelect = document.getElementById('to_unit');
     
-    const selectedCategory = categorySelect.value;
-    const units = unitCategories[selectedCategory].units;
+    // Initialize units
+    updateUnits();
+    
+    // Form submission
+    form.addEventListener('submit', function(e) {
+        const value = parseFloat(document.getElementById('value').value);
+        
+        if (value !== 0) {
+            if (typeof AllInToolbox !== 'undefined') {
+                AllInToolbox.utils.showLoading(convertBtn);
+                AllInToolbox.analytics.trackToolUsage('Unit Converter');
+            }
+            
+            // Simulate processing time
+            setTimeout(() => {
+                if (typeof AllInToolbox !== 'undefined') {
+                    AllInToolbox.utils.showLoading(convertBtn, false);
+                }
+            }, 500);
+        }
+    });
+});
+
+// Update unit dropdowns based on selected category
+function updateUnits() {
+    const category = document.getElementById('category').value;
+    const fromUnit = document.getElementById('from_unit');
+    const toUnit = document.getElementById('to_unit');
+    
+    const currentFromValue = fromUnit.value;
+    const currentToValue = toUnit.value;
     
     // Clear existing options
-    fromUnitSelect.innerHTML = '';
-    toUnitSelect.innerHTML = '';
+    fromUnit.innerHTML = '';
+    toUnit.innerHTML = '';
     
-    // Populate from unit select
-    for (const [unit, info] of Object.entries(units)) {
-        const option = document.createElement('option');
-        option.value = unit;
-        option.textContent = info.name[currentLang];
-        fromUnitSelect.appendChild(option);
+    // Add new options
+    const units = unitCategories[category].units;
+    for (const [unitId, unitInfo] of Object.entries(units)) {
+        const optionFrom = new Option(unitInfo.name[currentLang], unitId);
+        const optionTo = new Option(unitInfo.name[currentLang], unitId);
+        
+        fromUnit.add(optionFrom);
+        toUnit.add(optionTo);
     }
     
-    // Populate to unit select
-    for (const [unit, info] of Object.entries(units)) {
-        const option = document.createElement('option');
-        option.value = unit;
-        option.textContent = info.name[currentLang];
-        toUnitSelect.appendChild(option);
+    // Restore previous selections if they exist in new category
+    if (units[currentFromValue]) {
+        fromUnit.value = currentFromValue;
     }
-}   
+    if (units[currentToValue]) {
+        toUnit.value = currentToValue;
+    }
+    
+    // Set default values if nothing selected
+    if (!fromUnit.value) {
+        fromUnit.selectedIndex = 0;
+    }
+    if (!toUnit.value && toUnit.options.length > 1) {
+        toUnit.selectedIndex = 1;
+    }
+}
+
+// Swap units function
+function swapUnits() {
+    const fromUnit = document.getElementById('from_unit');
+    const toUnit = document.getElementById('to_unit');
+    
+    const fromValue = fromUnit.value;
+    const toValue = toUnit.value;
+    
+    fromUnit.value = toValue;
+    toUnit.value = fromValue;
+}
+
+// Quick conversion
+function setQuickConversion(category, from, to, value) {
+    document.getElementById('category').value = category;
+    updateUnits();
+    document.getElementById('from_unit').value = from;
+    document.getElementById('to_unit').value = to;
+    document.getElementById('value').value = value;
+}
+
+// Copy result
+function copyResult() {
+    <?php if ($result): ?>
+    const resultText = '<?php echo $result['value']; ?> <?php echo $result['from_unit_name']; ?> = <?php echo $result['converted_value']; ?> <?php echo $result['to_unit_name']; ?>';
+    if (typeof AllInToolbox !== 'undefined') {
+        AllInToolbox.utils.copyToClipboard(resultText);
+    } else {
+        navigator.clipboard.writeText(resultText).then(() => {
+            alert('<?php echo ($currentLang === 'tr') ? 'Sonuç kopyalandı!' : 'Result copied!'; ?>');
+        });
+    }
+    <?php endif; ?>
+}
+
+<?php if ($result): ?>
+// Track successful conversion
+if (typeof AllInToolbox !== 'undefined') {
+    AllInToolbox.analytics.trackEvent('Tool', 'Convert', 'Unit Converter');
+}
+<?php endif; ?>
 </script>
+
+<?php include '../includes/footer.php'; ?>

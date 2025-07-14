@@ -1,5 +1,5 @@
 <?php
-// tools/qr-code-generator.php - TAM ÖZELLİKLİ VERSİYON
+// tools/qr-code-generator.php - DÜZELTİLMİŞ VERSİYON
 session_start();
 
 require_once '../config/config.php';
@@ -53,6 +53,20 @@ $qrTypes = [
     ]
 ];
 
+// Basit QR kod oluşturma fonksiyonu (Google Charts API kullanarak)
+function generateQRCode($data, $size = 300) {
+    $encodedData = urlencode($data);
+    $qrUrl = "https://chart.googleapis.com/chart?chs={$size}x{$size}&cht=qr&chl={$encodedData}&choe=UTF-8";
+    return $qrUrl;
+}
+
+// Alternatif: QR Server API
+function generateQRCodeAlt($data, $size = 300) {
+    $encodedData = urlencode($data);
+    $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size={$size}x{$size}&data={$encodedData}";
+    return $qrUrl;
+}
+
 // Form işleme
 $result = null;
 $error = null;
@@ -60,6 +74,10 @@ $error = null;
 if ($_POST) {
     $qrType = $_POST['qr_type'] ?? 'text';
     $qrData = '';
+    $size = intval($_POST['qr_size'] ?? 300);
+    
+    // Size validation
+    $size = max(150, min(500, $size));
     
     switch ($qrType) {
         case 'text':
@@ -127,10 +145,16 @@ if ($_POST) {
     }
     
     if (!$error && !empty($qrData)) {
+        // QR kodunu oluştur
+        $qrImageUrl = generateQRCodeAlt($qrData, $size);
+        
         $result = [
             'type' => $qrType,
             'data' => $qrData,
-            'display_data' => $qrData
+            'display_data' => $qrData,
+            'qr_image_url' => $qrImageUrl,
+            'size' => $size,
+            'download_url' => $qrImageUrl . '&download=1'
         ];
     } elseif (!$error) {
         $error = ($currentLang === 'tr') ? 'Lütfen gerekli alanları doldurun!' : 'Please fill in the required fields!';
@@ -178,6 +202,21 @@ include '../includes/header.php';
                                             <?php echo $info[$currentLang]; ?>
                                         </option>
                                     <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- QR Size -->
+                            <div class="mb-3">
+                                <label for="qr_size" class="form-label">
+                                    <i class="fas fa-expand"></i> 
+                                    <?php echo ($currentLang === 'tr') ? 'QR Kod Boyutu' : 'QR Code Size'; ?>
+                                </label>
+                                <select class="form-control" id="qr_size" name="qr_size">
+                                    <option value="150" <?php echo (($_POST['qr_size'] ?? '300') === '150') ? 'selected' : ''; ?>>150x150 px</option>
+                                    <option value="200" <?php echo (($_POST['qr_size'] ?? '300') === '200') ? 'selected' : ''; ?>>200x200 px</option>
+                                    <option value="300" <?php echo (($_POST['qr_size'] ?? '300') === '300') ? 'selected' : ''; ?>>300x300 px</option>
+                                    <option value="400" <?php echo (($_POST['qr_size'] ?? '300') === '400') ? 'selected' : ''; ?>>400x400 px</option>
+                                    <option value="500" <?php echo (($_POST['qr_size'] ?? '300') === '500') ? 'selected' : ''; ?>>500x500 px</option>
                                 </select>
                             </div>
 
@@ -346,8 +385,8 @@ include '../includes/header.php';
                         </h6>
                         <p class="mb-0">
                             <?php echo ($currentLang === 'tr') ? 
-                                'Farklı türlerde QR kodları ücretsiz oluşturun. Tüm işlemler tarayıcınızda yapılır.' :
-                                'Create different types of QR codes for free. All processing is done in your browser.'; ?>
+                                'Farklı türlerde QR kodları ücretsiz oluşturun. Güvenilir API kullanılır.' :
+                                'Create different types of QR codes for free. Uses reliable API.'; ?>
                         </p>
                     </div>
                 </div>
@@ -359,14 +398,22 @@ include '../includes/header.php';
                         <h4><i class="fas fa-qrcode"></i> 
                             <?php echo ($currentLang === 'tr') ? 'QR Kodunuz' : 'Your QR Code'; ?>
                         </h4>
-                        <div class="qr-code-container">
-                            <div id="qrcode" class="mb-3"></div>
+                        <div class="qr-code-container text-center">
+                            <!-- QR Code Image -->
+                            <div class="qr-image mb-3">
+                                <img src="<?php echo $result['qr_image_url']; ?>" 
+                                     alt="QR Code" 
+                                     class="img-fluid border rounded"
+                                     style="max-width: <?php echo $result['size']; ?>px;">
+                            </div>
                             
                             <div class="d-grid gap-2 mt-3">
-                                <button class="btn btn-success" onclick="downloadQR()">
+                                <a href="<?php echo $result['download_url']; ?>" 
+                                   class="btn btn-success" 
+                                   download="qrcode.png">
                                     <i class="fas fa-download"></i> 
                                     <?php echo ($currentLang === 'tr') ? 'QR Kodu İndir' : 'Download QR Code'; ?>
-                                </button>
+                                </a>
                                 <button class="btn btn-light" onclick="copyQRData()">
                                     <i class="fas fa-copy"></i> 
                                     <?php echo ($currentLang === 'tr') ? 'Veriyi Kopyala' : 'Copy Data'; ?>
@@ -389,6 +436,9 @@ include '../includes/header.php';
                             <small class="text-muted">
                                 <?php echo ($currentLang === 'tr') ? 'Tür: ' : 'Type: '; ?>
                                 <strong><?php echo $qrTypes[$result['type']][$currentLang]; ?></strong>
+                                <br>
+                                <?php echo ($currentLang === 'tr') ? 'Boyut: ' : 'Size: '; ?>
+                                <strong><?php echo $result['size']; ?>x<?php echo $result['size']; ?> px</strong>
                             </small>
                         </div>
                     </div>
@@ -463,39 +513,50 @@ include '../includes/header.php';
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
+                                
+                                <h5><?php echo ($currentLang === 'tr') ? 'Boyut Seçenekleri' : 'Size Options'; ?></h5>
+                                <p>
+                                    <?php echo ($currentLang === 'tr') ? 
+                                        '150x150 px ile 500x500 px arasında farklı boyutlarda QR kod oluşturabilirsiniz.' :
+                                        'You can create QR codes in different sizes from 150x150 px to 500x500 px.'; ?>
+                                </p>
                             </div>
                             
                             <div class="col-lg-6">
                                 <h5><?php echo ($currentLang === 'tr') ? 'Nasıl Kullanılır?' : 'How to Use?'; ?></h5>
                                 <ol>
                                     <li><?php echo ($currentLang === 'tr') ? 'QR kod türünü seçin' : 'Select QR code type'; ?></li>
+                                    <li><?php echo ($currentLang === 'tr') ? 'Boyutu belirleyin' : 'Choose the size'; ?></li>
                                     <li><?php echo ($currentLang === 'tr') ? 'Gerekli bilgileri doldurun' : 'Fill in the required information'; ?></li>
                                     <li><?php echo ($currentLang === 'tr') ? 'QR kod oluştur butonuna tıklayın' : 'Click generate QR code button'; ?></li>
                                     <li><?php echo ($currentLang === 'tr') ? 'QR kodu indirin veya yazdırın' : 'Download or print the QR code'; ?></li>
                                 </ol>
                                 
-                                <h5><?php echo ($currentLang === 'tr') ? 'Önemli Notlar' : 'Important Notes'; ?></h5>
+                                <h5><?php echo ($currentLang === 'tr') ? 'Özellikler' : 'Features'; ?></h5>
                                 <ul>
                                     <li><?php echo ($currentLang === 'tr') ? 
-                                        'QR kodlar ücretsiz ve sınırsız oluşturulur' : 
-                                        'QR codes are created free and unlimited'; ?></li>
+                                        'Güvenilir API kullanımı' : 
+                                        'Reliable API usage'; ?></li>
                                     <li><?php echo ($currentLang === 'tr') ? 
-                                        'Tüm işlemler tarayıcınızda yapılır' : 
-                                        'All processing is done in your browser'; ?></li>
+                                        'Yüksek kaliteli QR kodlar' : 
+                                        'High quality QR codes'; ?></li>
                                     <li><?php echo ($currentLang === 'tr') ? 
-                                        'Oluşturulan QR kodlar kalıcıdır' : 
-                                        'Generated QR codes are permanent'; ?></li>
+                                        'PNG formatında indirme' : 
+                                        'Download in PNG format'; ?></li>
                                     <li><?php echo ($currentLang === 'tr') ? 
-                                        'Herhangi bir QR okuyucu ile taranabilir' : 
-                                        'Can be scanned with any QR reader'; ?></li>
+                                        'Farklı boyut seçenekleri' : 
+                                        'Different size options'; ?></li>
+                                    <li><?php echo ($currentLang === 'tr') ? 
+                                        'Mobil uyumlu okuma' : 
+                                        'Mobile compatible reading'; ?></li>
                                 </ul>
                                 
                                 <div class="alert alert-success">
                                     <i class="fas fa-shield-alt"></i>
-                                    <strong><?php echo ($currentLang === 'tr') ? 'Gizlilik:' : 'Privacy:'; ?></strong>
+                                    <strong><?php echo ($currentLang === 'tr') ? 'Güvenlik:' : 'Security:'; ?></strong>
                                     <?php echo ($currentLang === 'tr') ? 
-                                        'Verileriniz hiçbir yerde saklanmaz, tamamen güvenlidir.' :
-                                        'Your data is not stored anywhere, completely secure.'; ?>
+                                        'QR kodlarınız güvenli API ile oluşturulur ve verileriniz saklanmaz.' :
+                                        'Your QR codes are created with secure API and your data is not stored.'; ?>
                                 </div>
                             </div>
                         </div>
@@ -551,9 +612,6 @@ include '../includes/header.php';
     </div>
 </main>
 
-<!-- QR Code Library -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-
 <script>
 // QR Code Generator specific JavaScript
 document.addEventListener('DOMContentLoaded', function() {
@@ -573,19 +631,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show correct fields on page load
     showQRFields();
-    
-    // Generate QR code if result exists
-    <?php if ($result): ?>
-    // Ensure QR library is loaded before calling
-    if (typeof QRCode !== 'undefined') {
-        generateQRCode('<?php echo addslashes($result['data']); ?>');
-    } else {
-        // If library isn't loaded yet, wait for it
-        document.querySelector('script[src*="qrcode"]').onload = function() {
-            generateQRCode('<?php echo addslashes($result['data']); ?>');
-        };
-    }
-    <?php endif; ?>
     
     // Form submission
     form.addEventListener('submit', function(e) {
@@ -618,51 +663,10 @@ function showQRFields() {
     }
 }
 
-// Execute on page load to ensure fields are visible
-document.addEventListener('DOMContentLoaded', function() {
-    showQRFields();
-});
-
 // Set QR type (for examples)
 function setQRType(type) {
     document.getElementById('qr_type').value = type;
     showQRFields();
-}
-
-// Generate QR Code
-function generateQRCode(data) {
-    const qrCodeElement = document.getElementById('qrcode');
-    if (qrCodeElement) {
-        qrCodeElement.innerHTML = '';
-        
-        QRCode.toCanvas(qrCodeElement, data, {
-            width: 300,
-            height: 300,
-            colorDark: '#000000',
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.M
-        }, function (error) {
-            if (error) {
-                console.error('QR Code generation failed:', error);
-                qrCodeElement.innerHTML = '<p class="text-danger">QR kod oluşturulamadı!</p>';
-            }
-        });
-    }
-}
-
-// Download QR Code
-function downloadQR() {
-    const canvas = document.querySelector('#qrcode canvas');
-    if (canvas) {
-        const link = document.createElement('a');
-        link.download = 'qrcode.png';
-        link.href = canvas.toDataURL();
-        link.click();
-        
-        if (typeof AllInToolbox !== 'undefined') {
-            AllInToolbox.analytics.trackEvent('Tool', 'Download', 'QR Code');
-        }
-    }
 }
 
 // Copy QR Data
@@ -675,6 +679,19 @@ function copyQRData() {
         } else {
             navigator.clipboard.writeText(text).then(() => {
                 alert('<?php echo ($currentLang === 'tr') ? 'Veri kopyalandı!' : 'Data copied!'; ?>');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('<?php echo ($currentLang === 'tr') ? 'Veri kopyalandı!' : 'Data copied!'; ?>');
+                } catch (err) {
+                    alert('<?php echo ($currentLang === 'tr') ? 'Kopyalama başarısız!' : 'Copy failed!'; ?>');
+                }
+                document.body.removeChild(textArea);
             });
         }
     }
