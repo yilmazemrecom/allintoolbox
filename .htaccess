@@ -1,19 +1,40 @@
-# AllInToolbox .htaccess - EN MİNİMAL HALİ
+# AllInToolbox .htaccess - GÜNCELLENMIŞ VERSİYON
 
 RewriteEngine On
 
-# Ana sayfa
+# Ana sayfa yönlendirmeleri
 RewriteRule ^$ index.php [L]
-
-# Basit yönlendirmeler
 RewriteRule ^tr/?$ pages/home.php?lang=tr [L]
 RewriteRule ^en/?$ pages/home.php?lang=en [L]
 
-# Tools - sadece temel olanlar
-RewriteRule ^tools/bmi-calculator/?$ tools/bmi-calculator.php [L]
-RewriteRule ^tools/currency-converter/?$ tools/currency-converter.php [L]
+# Kategori sayfaları
+RewriteRule ^tr/kategori/([a-z]+)/?$ pages/category.php?category=$1&lang=tr [L]
+RewriteRule ^en/category/([a-z]+)/?$ pages/category.php?category=$1&lang=en [L]
+
+# SEO dostu kategori URL'leri
+RewriteRule ^kategori/([a-z]+)/?$ pages/category.php?category=$1&lang=tr [L]
+RewriteRule ^category/([a-z]+)/?$ pages/category.php?category=$1&lang=en [L]
+
+# Tool sayfaları
+RewriteRule ^tools/([a-z-]+)/?$ tools/$1.php [L]
+
+# Statik sayfalar
+RewriteRule ^tr/(about|contact|privacy|terms)/?$ pages/$1.php?lang=tr [L]
+RewriteRule ^en/(about|contact|privacy|terms)/?$ pages/$1.php?lang=en [L]
+RewriteRule ^(about|contact|privacy|terms)/?$ pages/$1.php [L]
+# SEO dostu statik sayfalar
+RewriteRule ^tr/([a-z-]+)/?$ pages/$1.php?lang=tr [L]
+RewriteRule ^en/([a-z-]+)/?$ pages/$1.php?lang=en [L]
+
 
 # 404 için fallback
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [L]
+
+# Güvenlik
+<Files ".htaccess">
+Order allow,deny
+Deny from all
+</Files>
+

@@ -24,7 +24,7 @@ include '../includes/header.php';
 
         <!-- Hero Section -->
         <div class="hero-section">
-            <div class="container">
+            <div class="container-fluid px-5">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12">
                         <h1 class="display-4 fw-bold mb-4">
@@ -197,29 +197,7 @@ include '../includes/header.php';
             </div>
         </div>
 
-        <!-- Newsletter Signup -->
-        <div class="newsletter-section text-white py-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-12 text-center">
-                        <h3 class="mb-3">
-                            <i class="fas fa-envelope"></i> <?php echo __('newsletter_title'); ?>
-                        </h3>
-                        <p class="mb-4"><?php echo __('newsletter_subtitle'); ?></p>
-                        <form class="row g-3 justify-content-center" id="newsletterForm">
-                            <div class="col-md-6 col-12">
-                                <input type="email" class="form-control" placeholder="<?php echo __('email_placeholder'); ?>" required>
-                            </div>
-                            <div class="col-md-auto col-12">
-                                <button type="submit" class="btn btn-warning w-100">
-                                    <i class="fas fa-paper-plane"></i> <?php echo __('subscribe'); ?>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
     </div>
 </main>
