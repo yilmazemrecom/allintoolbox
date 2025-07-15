@@ -31,8 +31,17 @@ $baseUrl = '';
     ?>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
-    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="<?php echo $baseUrl; ?>/assets/images/favicon.ico">
+
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="<?php echo $pageTitle ?? SITE_NAME; ?>">
+    <meta property="og:description" content="<?php echo $pageDescription ?? __('meta_description_default'); ?>">
+    <meta property="og:image" content="<?php echo $baseUrl; ?>/assets/images/og-image.png">
+    <meta property="og:url" content="<?php echo getCurrentUrl(); ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<?php echo SITE_NAME; ?>">
+    
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -41,11 +50,27 @@ $baseUrl = '';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>/assets/css/style.css">
     
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "<?php echo SITE_NAME; ?>",
+        "url": "<?php echo $baseUrl; ?>",
+        "description": "<?php echo __('meta_description_default'); ?>",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "<?php echo $baseUrl; ?>/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 </head>
 <body>
     <!-- Header -->
