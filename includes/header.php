@@ -1,15 +1,20 @@
 <?php
-// includes/header.php - DÜZELTİLMİŞ VERSİYON
+// includes/header.php - CLEAN URLs ile GÜNCELLENMİŞ VERSİYON
 
 $currentLang = getCurrentLanguage();
+
+// Include URL helpers if available
+if (file_exists(__DIR__ . '/../config/url-helpers.php')) {
+    require_once __DIR__ . '/../config/url-helpers.php';
+}
 
 // Mevcut sayfanın path'ini al
 $currentPath = $_SERVER['REQUEST_URI'];
 $isHomePage = ($currentPath === '/' || strpos($currentPath, '/pages/home.php') !== false);
 $isToolPage = (strpos($currentPath, '/tools/') !== false);
 
-// Base URL'i belirle - tool sayfalarında farklı olacak
-$baseUrl = $isToolPage ? '..' : '';
+// Base URL'i belirle - clean URLs için root
+$baseUrl = '';
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $currentLang; ?>">
@@ -26,8 +31,8 @@ $baseUrl = $isToolPage ? '..' : '';
     ?>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?php echo $baseUrl; ?>/assets/images/favicon.ico">
-    <link rel="apple-touch-icon" href="<?php echo $baseUrl; ?>/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +41,7 @@ $baseUrl = $isToolPage ? '..' : '';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +53,7 @@ $baseUrl = $isToolPage ? '..' : '';
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
                 <!-- Logo -->
-                <a class="navbar-brand" href="<?php echo $baseUrl; ?>/?lang=<?php echo $currentLang; ?>" 
+                <a class="navbar-brand" href="/<?php echo $currentLang; ?>/" 
                    title="<?php echo SITE_NAME; ?> - <?php echo __('meta_description_default'); ?>">
                     <i class="fas fa-tools me-2"></i>
                     <span class="fw-bold"><?php echo SITE_NAME; ?></span>
@@ -72,14 +77,14 @@ $baseUrl = $isToolPage ? '..' : '';
                             </a>
                             <ul class="dropdown-menu">
                                 <li><h6 class="dropdown-header"><?php echo __('category_finance'); ?></h6></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/loan-calculator.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('loan-calculator', $currentLang) : "/tools/loan-calculator.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-calculator me-2"></i><?php echo ($currentLang === 'tr') ? 'Kredi Hesaplayıcı' : 'Loan Calculator'; ?>
                                 </a></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/currency-converter.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('currency-converter', $currentLang) : "/tools/currency-converter.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-exchange-alt me-2"></i><?php echo ($currentLang === 'tr') ? 'Döviz Çevirici' : 'Currency Converter'; ?>
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/pages/category.php?category=finance&lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('finance', $currentLang) : "/pages/category.php?category=finance&lang={$currentLang}"; ?>">
                                     <i class="fas fa-eye me-2"></i><?php echo ($currentLang === 'tr') ? 'Tümünü Gör' : 'View All'; ?>
                                 </a></li>
                             </ul>
@@ -93,14 +98,14 @@ $baseUrl = $isToolPage ? '..' : '';
                             </a>
                             <ul class="dropdown-menu">
                                 <li><h6 class="dropdown-header"><?php echo __('category_health'); ?></h6></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/bmi-calculator.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('bmi-calculator', $currentLang) : "/tools/bmi-calculator.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-weight me-2"></i><?php echo ($currentLang === 'tr') ? 'BMI Hesaplayıcı' : 'BMI Calculator'; ?>
                                 </a></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/calorie-calculator.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('calorie-calculator', $currentLang) : "/tools/calorie-calculator.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-apple-alt me-2"></i><?php echo ($currentLang === 'tr') ? 'Kalori Hesaplayıcı' : 'Calorie Calculator'; ?>
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/pages/category.php?category=health&lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('health', $currentLang) : "/pages/category.php?category=health&lang={$currentLang}"; ?>">
                                     <i class="fas fa-eye me-2"></i><?php echo ($currentLang === 'tr') ? 'Tümünü Gör' : 'View All'; ?>
                                 </a></li>
                             </ul>
@@ -114,14 +119,14 @@ $baseUrl = $isToolPage ? '..' : '';
                             </a>
                             <ul class="dropdown-menu">
                                 <li><h6 class="dropdown-header"><?php echo __('category_web'); ?></h6></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/qr-code-generator.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('qr-code-generator', $currentLang) : "/tools/qr-code-generator.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-qrcode me-2"></i><?php echo ($currentLang === 'tr') ? 'QR Kod Üretici' : 'QR Code Generator'; ?>
                                 </a></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/password-generator.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('password-generator', $currentLang) : "/tools/password-generator.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-key me-2"></i><?php echo ($currentLang === 'tr') ? 'Şifre Üretici' : 'Password Generator'; ?>
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/pages/category.php?category=web&lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('web', $currentLang) : "/pages/category.php?category=web&lang={$currentLang}"; ?>">
                                     <i class="fas fa-eye me-2"></i><?php echo ($currentLang === 'tr') ? 'Tümünü Gör' : 'View All'; ?>
                                 </a></li>
                             </ul>
@@ -135,14 +140,14 @@ $baseUrl = $isToolPage ? '..' : '';
                             </a>
                             <ul class="dropdown-menu">
                                 <li><h6 class="dropdown-header"><?php echo __('category_converter'); ?></h6></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/unit-converter.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('unit-converter', $currentLang) : "/tools/unit-converter.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-ruler me-2"></i><?php echo ($currentLang === 'tr') ? 'Ölçü Birimi Çevirici' : 'Unit Converter'; ?>
                                 </a></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/color-converter.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('color-converter', $currentLang) : "/tools/color-converter.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-palette me-2"></i><?php echo ($currentLang === 'tr') ? 'Renk Çevirici' : 'Color Converter'; ?>
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/pages/category.php?category=converter&lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('converter', $currentLang) : "/pages/category.php?category=converter&lang={$currentLang}"; ?>">
                                     <i class="fas fa-eye me-2"></i><?php echo ($currentLang === 'tr') ? 'Tümünü Gör' : 'View All'; ?>
                                 </a></li>
                             </ul>
@@ -156,14 +161,14 @@ $baseUrl = $isToolPage ? '..' : '';
                             </a>
                             <ul class="dropdown-menu">
                                 <li><h6 class="dropdown-header"><?php echo __('category_utility'); ?></h6></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/text-analyzer.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('text-analyzer', $currentLang) : "/tools/text-analyzer.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-file-alt me-2"></i><?php echo ($currentLang === 'tr') ? 'Metin Analizi' : 'Text Analyzer'; ?>
                                 </a></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/tools/age-calculator.php?lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getToolCleanUrl') ? getToolCleanUrl('age-calculator', $currentLang) : "/tools/age-calculator.php?lang={$currentLang}"; ?>">
                                     <i class="fas fa-birthday-cake me-2"></i><?php echo ($currentLang === 'tr') ? 'Yaş Hesaplayıcı' : 'Age Calculator'; ?>
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo $baseUrl; ?>/pages/category.php?category=utility&lang=<?php echo $currentLang; ?>">
+                                <li><a class="dropdown-item" href="<?php echo function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('utility', $currentLang) : "/pages/category.php?category=utility&lang={$currentLang}"; ?>">
                                     <i class="fas fa-eye me-2"></i><?php echo ($currentLang === 'tr') ? 'Tümünü Gör' : 'View All'; ?>
                                 </a></li>
                             </ul>
@@ -182,7 +187,7 @@ $baseUrl = $isToolPage ? '..' : '';
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <!-- About -->
                                 <li>
-                                    <a class="dropdown-item" href="<?php echo $baseUrl; ?>/pages/about.php?lang=<?php echo $currentLang; ?>" 
+                                    <a class="dropdown-item" href="<?php echo function_exists('getStaticCleanUrl') ? getStaticCleanUrl('about', $currentLang) : "/pages/about.php?lang={$currentLang}"; ?>" 
                                        title="<?php echo ($currentLang === 'tr') ? 'Hakkımızda' : 'About Us'; ?>">
                                         <i class="fas fa-info-circle me-2"></i>
                                         <?php echo ($currentLang === 'tr') ? 'Hakkımızda' : 'About Us'; ?>
@@ -191,10 +196,28 @@ $baseUrl = $isToolPage ? '..' : '';
                                 
                                 <!-- Contact -->
                                 <li>
-                                    <a class="dropdown-item" href="<?php echo $baseUrl; ?>/pages/contact.php?lang=<?php echo $currentLang; ?>" 
+                                    <a class="dropdown-item" href="<?php echo function_exists('getStaticCleanUrl') ? getStaticCleanUrl('contact', $currentLang) : "/pages/contact.php?lang={$currentLang}"; ?>" 
                                        title="<?php echo ($currentLang === 'tr') ? 'İletişim' : 'Contact'; ?>">
                                         <i class="fas fa-envelope me-2"></i>
                                         <?php echo ($currentLang === 'tr') ? 'İletişim' : 'Contact'; ?>
+                                    </a>
+                                </li>
+                                
+                                <!-- Privacy -->
+                                <li>
+                                    <a class="dropdown-item" href="<?php echo function_exists('getStaticCleanUrl') ? getStaticCleanUrl('privacy', $currentLang) : "/pages/privacy.php?lang={$currentLang}"; ?>" 
+                                       title="<?php echo ($currentLang === 'tr') ? 'Gizlilik Politikası' : 'Privacy Policy'; ?>">
+                                        <i class="fas fa-shield-alt me-2"></i>
+                                        <?php echo ($currentLang === 'tr') ? 'Gizlilik Politikası' : 'Privacy Policy'; ?>
+                                    </a>
+                                </li>
+                                
+                                <!-- Terms -->
+                                <li>
+                                    <a class="dropdown-item" href="<?php echo function_exists('getStaticCleanUrl') ? getStaticCleanUrl('terms', $currentLang) : "/pages/terms.php?lang={$currentLang}"; ?>" 
+                                       title="<?php echo ($currentLang === 'tr') ? 'Kullanım Şartları' : 'Terms of Service'; ?>">
+                                        <i class="fas fa-file-contract me-2"></i>
+                                        <?php echo ($currentLang === 'tr') ? 'Kullanım Şartları' : 'Terms of Service'; ?>
                                     </a>
                                 </li>
                             </ul>
@@ -212,7 +235,7 @@ $baseUrl = $isToolPage ? '..' : '';
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item <?php echo ($currentLang === 'tr') ? 'active' : ''; ?>" 
-                                   href="<?php echo getLanguageUrl('tr'); ?>" 
+                                   href="<?php echo function_exists('getLanguageCleanUrl') ? getLanguageCleanUrl('tr') : getLanguageUrl('tr'); ?>" 
                                    title="Türkçe">
                                     🇹🇷 Türkçe
                                     <?php if ($currentLang === 'tr'): ?>
@@ -222,7 +245,7 @@ $baseUrl = $isToolPage ? '..' : '';
                             </li>
                             <li>
                                 <a class="dropdown-item <?php echo ($currentLang === 'en') ? 'active' : ''; ?>" 
-                                   href="<?php echo getLanguageUrl('en'); ?>" 
+                                   href="<?php echo function_exists('getLanguageCleanUrl') ? getLanguageCleanUrl('en') : getLanguageUrl('en'); ?>" 
                                    title="English">
                                     🇺🇸 English
                                     <?php if ($currentLang === 'en'): ?>

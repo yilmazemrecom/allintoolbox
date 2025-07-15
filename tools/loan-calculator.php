@@ -5,6 +5,11 @@ session_start();
 require_once '../config/config.php';
 require_once '../config/functions.php';
 
+// URL helpers'ı yükle
+if (file_exists('../config/url-helpers.php')) {
+    require_once '../config/url-helpers.php';
+}
+
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
 
@@ -132,9 +137,9 @@ include '../includes/header.php';
         <!-- Breadcrumb -->
         <?php
         $breadcrumbItems = [
-            ['title' => ($currentLang === 'tr') ? 'Ana Sayfa' : 'Home', 'url' => '/?lang=' . $currentLang],
-            ['title' => ($currentLang === 'tr') ? 'Finans Araçları' : 'Finance Tools', 'url' => '/' . 'pages/category.php?category=finance'],
-            ['title' => $pageTitle]
+            ['title' => __('breadcrumb_home'), 'url' => '/' . $currentLang . '/'],
+            ['title' => __('breadcrumb_loan_tools'), 'url' => '/' . 'pages/category.php?category=finance'],
+            ['title' => __('loan_title')]
         ];
         echo generateBreadcrumb($breadcrumbItems);
         ?>
@@ -428,7 +433,42 @@ include '../includes/header.php';
 
         <!-- Ad Space -->
         <?php echo renderAdSpace('content', 'large'); ?>
+        <!-- Related Tools -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h4><i class="fas fa-link"></i> <?php echo __('related_tools'); ?></h4>
+                <div class="row">
 
+                <?php
+                $relatedTools = ['age-calculator', 'bmi-calculator'];
+                foreach ($relatedTools as $toolId):
+                    // Clean URLs kullan varsa
+                    if (function_exists('getToolInfoWithCleanUrl')) {
+                        $toolInfo = getToolInfoWithCleanUrl($toolId, $currentLang);
+                    } else {
+                        $toolInfo = getToolInfo($toolId, $currentLang);
+                    }
+                    
+                    if ($toolInfo):
+                ?>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title"><?php echo $toolInfo['name']; ?></h6>
+                                    <p class="card-text"><?php echo $toolInfo['description']; ?></p>
+                                    <a href="<?php echo $toolInfo['url']; ?>" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-arrow-right"></i> <?php echo __('use_tool'); ?>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php 
+                        endif;
+                    endforeach; 
+                    ?>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 

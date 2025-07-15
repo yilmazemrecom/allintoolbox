@@ -5,6 +5,10 @@ session_start();
 require_once '../config/config.php';
 require_once '../config/functions.php';
 
+if (file_exists('../config/url-helpers.php')) {
+    require_once '../config/url-helpers.php';
+}
+
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
 
@@ -85,7 +89,7 @@ include '../includes/header.php';
         <?php
         $breadcrumbItems = [
             ['title' => __('breadcrumb_home'), 'url' => '/' . $currentLang . '/'],
-            ['title' => __('breadcrumb_health_tools'), 'url' => '/' . 'pages/category.php?category=utility'],
+            ['title' => __('category_utility'), 'url' => function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('utility', $currentLang) : '/pages/category.php?category=utility&lang=' . $currentLang],
             ['title' => __('age_title')]
         ];
         echo generateBreadcrumb($breadcrumbItems);
@@ -225,12 +229,20 @@ include '../includes/header.php';
             <div class="col-12">
                 <h4><i class="fas fa-link"></i> <?php echo __('related_tools'); ?></h4>
                 <div class="row">
-                    <?php
-                    $relatedTools = ['calorie-calculator', 'age-calculator'];
-                    foreach ($relatedTools as $toolId):
-                        $toolInfo = getToolInfo($toolId, $currentLang);
-                        if ($toolInfo):
-                    ?>
+
+                        <?php
+                        $relatedTools = ['calorie-calculator', 'bmi-calculator']; 
+                        foreach ($relatedTools as $toolId):
+                            // Clean URLs kullan varsa
+                            if (function_exists('getToolInfoWithCleanUrl')) {
+                                $toolInfo = getToolInfoWithCleanUrl($toolId, $currentLang);
+                            } else {
+                                $toolInfo = getToolInfo($toolId, $currentLang);
+                            }
+                            
+                            if ($toolInfo):
+                        ?>
+    
                         <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">

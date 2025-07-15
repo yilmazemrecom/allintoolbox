@@ -1,42 +1,196 @@
-# AllInToolbox .htaccess - GÜNCELLENMIŞ VERSİYON
-
+# AllInToolbox Advanced URL Routing
 RewriteEngine On
 
-# Ana sayfa yönlendirmeleri
+# Security Headers (existing)
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Force HTTPS (production only)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove trailing slashes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{THE_REQUEST} /+[^\s?]*?/[\s?]
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# ==========================================
+# CLEAN URL ROUTING SYSTEM
+# ==========================================
+
+# Homepage redirects
 RewriteRule ^$ index.php [L]
-RewriteRule ^tr/?$ pages/home.php?lang=tr [L]
-RewriteRule ^en/?$ pages/home.php?lang=en [L]
 
-# Kategori sayfaları
-RewriteRule ^tr/kategori/([a-z]+)/?$ pages/category.php?category=$1&lang=tr [L]
-RewriteRule ^en/category/([a-z]+)/?$ pages/category.php?category=$1&lang=en [L]
+# Language-specific homepages
+RewriteRule ^(tr|en)/?$ pages/home.php?lang=$1 [L]
 
-# SEO dostu kategori URL'leri
-RewriteRule ^kategori/([a-z]+)/?$ pages/category.php?category=$1&lang=tr [L]
-RewriteRule ^category/([a-z]+)/?$ pages/category.php?category=$1&lang=en [L]
+# ==========================================
+# TOOL PAGES - Clean URLs
+# ==========================================
 
-# Tool sayfaları
+# Turkish tool URLs with friendly names
+RewriteRule ^tr/bmi-hesaplayici/?$ tools/bmi-calculator.php?lang=tr [L]
+RewriteRule ^tr/kredi-hesaplayici/?$ tools/loan-calculator.php?lang=tr [L]
+RewriteRule ^tr/doviz-cevirici/?$ tools/currency-converter.php?lang=tr [L]
+RewriteRule ^tr/qr-kod-uretici/?$ tools/qr-code-generator.php?lang=tr [L]
+RewriteRule ^tr/sifre-uretici/?$ tools/password-generator.php?lang=tr [L]
+RewriteRule ^tr/metin-analizi/?$ tools/text-analyzer.php?lang=tr [L]
+RewriteRule ^tr/yas-hesaplayici/?$ tools/age-calculator.php?lang=tr [L]
+RewriteRule ^tr/olcu-birimi-cevirici/?$ tools/unit-converter.php?lang=tr [L]
+RewriteRule ^tr/renk-cevirici/?$ tools/color-converter.php?lang=tr [L]
+RewriteRule ^tr/kalori-hesaplayici/?$ tools/calorie-calculator.php?lang=tr [L]
+
+# English tool URLs
+RewriteRule ^en/bmi-calculator/?$ tools/bmi-calculator.php?lang=en [L]
+RewriteRule ^en/loan-calculator/?$ tools/loan-calculator.php?lang=en [L]
+RewriteRule ^en/currency-converter/?$ tools/currency-converter.php?lang=en [L]
+RewriteRule ^en/qr-code-generator/?$ tools/qr-code-generator.php?lang=en [L]
+RewriteRule ^en/password-generator/?$ tools/password-generator.php?lang=en [L]
+RewriteRule ^en/text-analyzer/?$ tools/text-analyzer.php?lang=en [L]
+RewriteRule ^en/age-calculator/?$ tools/age-calculator.php?lang=en [L]
+RewriteRule ^en/unit-converter/?$ tools/unit-converter.php?lang=en [L]
+RewriteRule ^en/color-converter/?$ tools/color-converter.php?lang=en [L]
+RewriteRule ^en/calorie-calculator/?$ tools/calorie-calculator.php?lang=en [L]
+
+# ==========================================
+# CATEGORY PAGES - Clean URLs
+# ==========================================
+
+# Turkish categories
+RewriteRule ^tr/finans-araclari/?$ pages/category.php?category=finance&lang=tr [L]
+RewriteRule ^tr/saglik-araclari/?$ pages/category.php?category=health&lang=tr [L]
+RewriteRule ^tr/web-araclari/?$ pages/category.php?category=web&lang=tr [L]
+RewriteRule ^tr/cevirici-araclar/?$ pages/category.php?category=converter&lang=tr [L]
+RewriteRule ^tr/pratik-araclar/?$ pages/category.php?category=utility&lang=tr [L]
+
+# English categories
+RewriteRule ^en/finance-tools/?$ pages/category.php?category=finance&lang=en [L]
+RewriteRule ^en/health-tools/?$ pages/category.php?category=health&lang=en [L]
+RewriteRule ^en/web-tools/?$ pages/category.php?category=web&lang=en [L]
+RewriteRule ^en/converter-tools/?$ pages/category.php?category=converter&lang=en [L]
+RewriteRule ^en/utility-tools/?$ pages/category.php?category=utility&lang=en [L]
+
+# ==========================================
+# STATIC PAGES - Clean URLs
+# ==========================================
+
+# Turkish static pages
+RewriteRule ^tr/hakkimizda/?$ pages/about.php?lang=tr [L]
+RewriteRule ^tr/iletisim/?$ pages/contact.php?lang=tr [L]
+RewriteRule ^tr/gizlilik-politikasi/?$ pages/privacy.php?lang=tr [L]
+RewriteRule ^tr/kullanim-sartlari/?$ pages/terms.php?lang=tr [L]
+
+# English static pages
+RewriteRule ^en/about/?$ pages/about.php?lang=en [L]
+RewriteRule ^en/contact/?$ pages/contact.php?lang=en [L]
+RewriteRule ^en/privacy-policy/?$ pages/privacy.php?lang=en [L]
+RewriteRule ^en/terms-of-service/?$ pages/terms.php?lang=en [L]
+
+# ==========================================
+# FALLBACK ROUTES (Backward Compatibility)
+# ==========================================
+
+# Generic tool routing (fallback)
+RewriteRule ^(tr|en)/tools/([a-z-]+)/?$ tools/$2.php?lang=$1 [L]
 RewriteRule ^tools/([a-z-]+)/?$ tools/$1.php [L]
 
-# Statik sayfalar
-RewriteRule ^tr/(about|contact|privacy|terms)/?$ pages/$1.php?lang=tr [L]
-RewriteRule ^en/(about|contact|privacy|terms)/?$ pages/$1.php?lang=en [L]
+# Generic category routing (fallback)
+RewriteRule ^(tr|en)/category/([a-z-]+)/?$ pages/category.php?category=$2&lang=$1 [L]
+RewriteRule ^category/([a-z-]+)/?$ pages/category.php?category=$1 [L]
+
+# Generic static pages (fallback)
+RewriteRule ^(tr|en)/(about|contact|privacy|terms)/?$ pages/$2.php?lang=$1 [L]
 RewriteRule ^(about|contact|privacy|terms)/?$ pages/$1.php [L]
-# SEO dostu statik sayfalar
-RewriteRule ^tr/([a-z-]+)/?$ pages/$1.php?lang=tr [L]
-RewriteRule ^en/([a-z-]+)/?$ pages/$1.php?lang=en [L]
 
+# ==========================================
+# SPECIAL ROUTES
+# ==========================================
 
-# 404 için fallback
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [L]
+# Sitemap routing
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^sitemap-([a-z]+)\.xml$ sitemap.php?type=$1 [L]
 
-# Güvenlik
-<Files ".htaccess">
-Order allow,deny
-Deny from all
-</Files>
+# Robots.txt
+RewriteRule ^robots\.txt$ robots.php [L]
 
-# Sitemap.xml yönlendirmesi
-RewriteRule ^sitemap\.xml$ /sitemap.php [L]
+# API endpoints (future)
+RewriteRule ^api/v1/(.*)$ api/v1/index.php?request=$1 [L]
+
+# ==========================================
+# ERROR HANDLING
+# ==========================================
+
+# Handle 404 errors
+ErrorDocument 404 /pages/404.php
+
+# Prevent access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|config)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to config and includes
+RewriteRule ^(config|includes|languages)/ - [F,L]
+
+# Block version control
+RewriteRule ^\.git - [F,L]
+RewriteRule ^\.svn - [F,L]
+
+# ==========================================
+# PERFORMANCE & SECURITY
+# ==========================================
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript application/json
+</IfModule>
+
+# Cache Control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Custom MIME types
+<IfModule mod_mime.c>
+    AddType application/javascript .js
+    AddType text/css .css
+    AddType image/svg+xml .svg
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+</IfModule>
+
+# PHP settings
+<IfModule mod_php.c>
+    php_value upload_max_filesize 50M
+    php_value post_max_size 50M
+    php_value max_execution_time 300
+    php_flag expose_php off
+    php_flag display_errors off
+    php_flag log_errors on
+</IfModule>
+
+# Charset & Options
+AddDefaultCharset UTF-8
+Options -Indexes +FollowSymLinks
+ServerSignature Off

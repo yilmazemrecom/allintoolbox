@@ -205,7 +205,8 @@ return [
     'age_next_birthday' => 'Next Birthday',
 
     // Loan Calculator
-    'loan_calculator_title' => 'Loan Calculator',
+    'loan_title' => 'Loan Calculator',
+    'breadcrumb_loan_tools' => 'Loan Tools',
     'loan_calculator_description' => 'Calculate loan payments and interest. Enter loan amount, interest rate, and term to calculate monthly payments.',
     'loan_principal' => 'Loan Amount (₺)',
     'loan_rate' => 'Annual Interest Rate (%)',
@@ -221,4 +222,27 @@ return [
     'loan_rate_placeholder' => 'Enter annual interest rate',
     'loan_term_placeholder' => 'Enter term in months',
     'loan_monthly_payment_label' => 'Monthly Payment',
+
+    // Calorie Calculator
+    'calorie_title' => 'Calorie Calculator',
+    'calorie_calculator_description' => 'Calculate your daily calorie needs based on your activity
+level and personal data.',
+    'calorie_age' => 'Age',
+    'calorie_gender' => 'Gender',
+    'calorie_weight' => 'Weight (kg)',
+    'calorie_height' => 'Height (cm)',
+    'calorie_activity_level' => 'Activity Level',
+    'calorie_goal' => 'Goal',
+    'calorie_calculate' => 'Calculate Calories',
+    'calorie_result' => 'Calorie Result',
+    'calorie_error' => 'Please enter valid values!',
+
+    // color converter
+    'color_title' => 'Color Converter',
+
+    // password generator
+    'password_title' => 'Password Generator',
+
+    // Text Analyzer
+    'text_title' => 'Text Analyzer',
 ];

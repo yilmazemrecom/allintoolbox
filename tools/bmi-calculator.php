@@ -6,6 +6,10 @@ session_start();
 require_once '../config/config.php';
 require_once '../config/functions.php';
 
+if (file_exists('../config/url-helpers.php')) {
+    require_once '../config/url-helpers.php';
+}
+
 // URL'den dil al
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
@@ -70,7 +74,7 @@ include '../includes/header.php';
         <?php
         $breadcrumbItems = [
             ['title' => __('breadcrumb_home'), 'url' => '/' . $currentLang . '/'],
-            ['title' => __('breadcrumb_health_tools'), 'url' => '/' . 'pages/category.php?category=health'],
+            ['title' => __('category_utility'), 'url' => function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('health', $currentLang) : '/pages/category.php?category=health&lang=' . $currentLang],
             ['title' => __('bmi_title')]
         ];
         echo generateBreadcrumb($breadcrumbItems);
@@ -256,12 +260,19 @@ include '../includes/header.php';
             <div class="col-12">
                 <h4><i class="fas fa-link"></i> <?php echo __('related_tools'); ?></h4>
                 <div class="row">
-                    <?php
-                    $relatedTools = ['calorie-calculator', 'age-calculator'];
-                    foreach ($relatedTools as $toolId):
+
+                <?php
+                $relatedTools = ['calorie-calculator', 'age-calculator'];
+                foreach ($relatedTools as $toolId):
+                    // Clean URLs kullan varsa
+                    if (function_exists('getToolInfoWithCleanUrl')) {
+                        $toolInfo = getToolInfoWithCleanUrl($toolId, $currentLang);
+                    } else {
                         $toolInfo = getToolInfo($toolId, $currentLang);
-                        if ($toolInfo):
-                    ?>
+                    }
+                    
+                    if ($toolInfo):
+                ?>
                         <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">

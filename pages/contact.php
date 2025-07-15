@@ -34,17 +34,20 @@ include '../includes/header.php';
         echo generateBreadcrumb($breadcrumbItems);
         ?>
 
-        <!-- Header -->
-        <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold mb-4">
-                <i class="fas fa-envelope text-primary me-3 "></i>
-                <?php echo ($currentLang === 'tr') ? 'İletişim' : 'Contact Us'; ?>
-            </h1>
-            <p class="lead text-muted">
-                <?php echo ($currentLang === 'tr') ? 
+
+                <!-- Hero Section -->
+        <div class="hero-section mb-5">
+            <div class="text-center">
+                <h1 class="display-4 fw-bold mb-4">
+                    <i class="fas fa-info-circle me-3"></i>
+                    <?php echo ($currentLang === 'tr') ? 'İletişim' : 'Contact Us'; ?>
+                </h1>
+                <p class="lead">
+                    <?php echo ($currentLang === 'tr') ? 
                     'Sorularınız, önerileriniz veya geri bildirimleriniz için bizimle iletişime geçin' :
                     'Contact us for your questions, suggestions or feedback'; ?>
-            </p>
+                </p>
+            </div>
         </div>
 
 

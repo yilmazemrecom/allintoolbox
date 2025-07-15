@@ -1,14 +1,15 @@
-# robots.txt for https://allintoolbox.com/
+# Block old PHP URLs - redirect to clean URLs
+Disallow: /tools/*.php
+Disallow: /pages/*.php
+Disallow: /*?lang=*
+Disallow: /*?category=*
 
-User-agent: *
-Allow: /
+# Preferred clean URLs
+Allow: /tr/
+Allow: /en/
+Allow: /assets/
 
-# Disallow specific directories
-Disallow: /admin/
-Disallow: /private/
-Disallow: /includes/
-Disallow: /cgi-bin/
-Disallow: /tmp/
-
-# Sitemap location
+# Sitemaps
 Sitemap: https://allintoolbox.com/sitemap.xml
+Sitemap: https://allintoolbox.com/sitemap-tr.xml
+Sitemap: https://allintoolbox.com/sitemap-en.xml

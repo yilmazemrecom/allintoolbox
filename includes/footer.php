@@ -1,13 +1,16 @@
 <?php
-// includes/footer.php - GÜNCELLENMIŞ VERSİYON
+// includes/footer.php - CLEAN URLs ile GÜNCELLENMIŞ
 
 if (!isset($currentLang)) {
     $currentLang = getCurrentLanguage();
 }
+
+// Include URL helpers if available
+if (file_exists(__DIR__ . '/../config/url-helpers.php')) {
+    require_once __DIR__ . '/../config/url-helpers.php';
+}
 ?>
     </main> <!-- main-content end -->
-
-
 
     <!-- Bottom Ad Space -->
     <?php echo renderAdSpace('footer', 'banner'); ?>
@@ -24,19 +27,16 @@ if (!isset($currentLang)) {
                             'Ücretsiz online araçlar ile hesaplamalarınızı kolaylaştırın. Hızlı, güvenli ve kullanımı kolay.' :
                             'Simplify your calculations with free online tools. Fast, secure and easy to use.'; ?>
                     </p>
-                    <div class="social-links">
-                        <a href="#" class="text-light me-3" title="Facebook" aria-label="Facebook">
-                            <i class="fab fa-facebook fa-lg"></i>
-                        </a>
-                        <a href="#" class="text-light me-3" title="Twitter" aria-label="Twitter">
-                            <i class="fab fa-twitter fa-lg"></i>
-                        </a>
-                        <a href="#" class="text-light me-3" title="Instagram" aria-label="Instagram">
-                            <i class="fab fa-instagram fa-lg"></i>
-                        </a>
-                        <a href="#" class="text-light" title="LinkedIn" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin fa-lg"></i>
-                        </a>
+                    
+                    <!-- Developer Info -->
+                    <div class="mt-3">
+                        <small class="text-light-50">
+                            <i class="fas fa-code me-1"></i>
+                            <?php echo ($currentLang === 'tr') ? 'Geliştirici:' : 'Developer:'; ?>
+                            <a href="https://yilmazemre.tr" target="_blank" rel="noopener" class="text-warning text-decoration-none">
+                                Emre Yılmaz
+                            </a>
+                        </small>
                     </div>
                 </div>
 
@@ -55,7 +55,13 @@ if (!isset($currentLang)) {
                         ];
                         
                         foreach ($popularToolIds as $toolId):
-                            $toolInfo = getToolInfo($toolId, $currentLang);
+                            // Use clean URLs if helper functions exist
+                            if (function_exists('getToolInfoWithCleanUrl')) {
+                                $toolInfo = getToolInfoWithCleanUrl($toolId, $currentLang);
+                            } else {
+                                $toolInfo = getToolInfo($toolId, $currentLang);
+                            }
+                            
                             if ($toolInfo):
                         ?>
                             <li class="mb-2">
@@ -85,9 +91,15 @@ if (!isset($currentLang)) {
                         ];
                         
                         foreach (TOOL_CATEGORIES as $categoryId => $categoryNames): 
+                            // Use clean URLs if helper functions exist
+                            if (function_exists('getCategoryCleanUrl')) {
+                                $categoryUrl = getCategoryCleanUrl($categoryId, $currentLang);
+                            } else {
+                                $categoryUrl = "/pages/category.php?category={$categoryId}&lang={$currentLang}";
+                            }
                         ?>
                             <div class="col-12 mb-2">
-                                <a href="/<?php echo $currentLang; ?>/category/<?php echo $categoryId; ?>" 
+                                <a href="<?php echo $categoryUrl; ?>" 
                                    class="text-light text-decoration-none footer-link">
                                     <i class="<?php echo $categoryIcons[$categoryId]; ?> me-2"></i><?php echo $categoryNames[$currentLang]; ?>
                                 </a>
@@ -100,26 +112,35 @@ if (!isset($currentLang)) {
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5><?php echo ($currentLang === 'tr') ? 'Hızlı Bağlantılar' : 'Quick Links'; ?></h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <a href="/<?php echo $currentLang; ?>/about" class="text-light text-decoration-none footer-link">
-                                <i class="fas fa-info-circle me-2"></i><?php echo ($currentLang === 'tr') ? 'Hakkımızda' : 'About Us'; ?>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="/<?php echo $currentLang; ?>/contact" class="text-light text-decoration-none footer-link">
-                                <i class="fas fa-envelope me-2"></i><?php echo ($currentLang === 'tr') ? 'İletişim' : 'Contact'; ?>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="/<?php echo $currentLang; ?>/privacy" class="text-light text-decoration-none footer-link">
-                                <i class="fas fa-shield-alt me-2"></i><?php echo ($currentLang === 'tr') ? 'Gizlilik Politikası' : 'Privacy Policy'; ?>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="/<?php echo $currentLang; ?>/terms" class="text-light text-decoration-none footer-link">
-                                <i class="fas fa-file-contract me-2"></i><?php echo ($currentLang === 'tr') ? 'Kullanım Şartları' : 'Terms of Service'; ?>
-                            </a>
-                        </li>
+                        <?php
+                        $staticPages = [
+                            'about' => ($currentLang === 'tr') ? 'Hakkımızda' : 'About Us',
+                            'contact' => ($currentLang === 'tr') ? 'İletişim' : 'Contact',
+                            'privacy' => ($currentLang === 'tr') ? 'Gizlilik Politikası' : 'Privacy Policy',
+                            'terms' => ($currentLang === 'tr') ? 'Kullanım Şartları' : 'Terms of Service'
+                        ];
+                        
+                        $staticIcons = [
+                            'about' => 'fas fa-info-circle',
+                            'contact' => 'fas fa-envelope',
+                            'privacy' => 'fas fa-shield-alt',
+                            'terms' => 'fas fa-file-contract'
+                        ];
+                        
+                        foreach ($staticPages as $pageId => $pageName):
+                            // Use clean URLs if helper functions exist
+                            if (function_exists('getStaticCleanUrl')) {
+                                $pageUrl = getStaticCleanUrl($pageId, $currentLang);
+                            } else {
+                                $pageUrl = "/pages/{$pageId}.php?lang={$currentLang}";
+                            }
+                        ?>
+                            <li class="mb-2">
+                                <a href="<?php echo $pageUrl; ?>" class="text-light text-decoration-none footer-link">
+                                    <i class="<?php echo $staticIcons[$pageId]; ?> me-2"></i><?php echo $pageName; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                     
                     <div class="mt-4">
@@ -137,17 +158,21 @@ if (!isset($currentLang)) {
 
             <!-- Bottom Footer -->
             <div class="row align-items-center">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <p class="mb-0 text-light-50">
                         &copy; <?php echo date('Y'); ?> <?php echo SITE_NAME; ?>. <?php echo ($currentLang === 'tr') ? 'Tüm hakları saklıdır.' : 'All rights reserved.'; ?>
+                        <span class="mx-2">•</span>
+                        <?php echo ($currentLang === 'tr') ? 'Türkiye\'de yapıldı' : 'Made in Turkey'; ?> 🇹🇷
+                        <span class="mx-2">•</span>
+                        <a href="https://yilmazemre.tr" target="_blank" rel="noopener" class="text-warning text-decoration-none">
+                            yilmazemre.tr
+                        </a>
                     </p>
                 </div>
-                <div class="col-md-6 text-md-end">
+                <div class="col-md-4 text-md-end">
                     <small class="text-light-50">
                         <?php echo ($currentLang === 'tr') ? 'Sayfa yükleme süresi:' : 'Page load time:'; ?> 
                         <span id="loadTime"><?php echo getLoadTime(); ?>s</span>
-                        <span class="mx-2">•</span>
-                        <?php echo ($currentLang === 'tr') ? 'Türkiye\'de yapıldı' : 'Made in Turkey'; ?> 🇹🇷
                     </small>
                 </div>
             </div>
@@ -161,6 +186,7 @@ if (!isset($currentLang)) {
     <script src="/assets/js/main.js"></script>
     
     <!-- Google Analytics -->
+    <?php if (defined('ANALYTICS') && !empty(ANALYTICS['google_analytics'])): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo ANALYTICS['google_analytics']; ?>"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -174,20 +200,19 @@ if (!isset($currentLang)) {
             }
         });
     </script>
+    <?php endif; ?>
     
     <!-- Ezoic Integration -->
-    <?php if (ANALYTICS['ezoic_enabled']): ?>
+    <?php if (defined('ANALYTICS') && isset(ANALYTICS['ezoic_enabled']) && ANALYTICS['ezoic_enabled']): ?>
     <script data-ezoic="1">
         // Ezoic integration code
         var ezoicTestActive = true;
     </script>
     <?php endif; ?>
 
-    <!-- Newsletter Form Handler -->
+    <!-- Footer JavaScript -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-
-        
         // Footer link hover effects
         document.querySelectorAll('.footer-link').forEach(link => {
             link.addEventListener('mouseenter', function() {
@@ -232,6 +257,32 @@ if (!isset($currentLang)) {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
+            });
+        });
+        
+        // Track footer clicks for analytics
+        document.querySelectorAll('.footer-link').forEach(link => {
+            link.addEventListener('click', function() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'click', {
+                        event_category: 'Footer',
+                        event_label: this.textContent.trim(),
+                        value: 1
+                    });
+                }
+            });
+        });
+        
+        // Track developer link clicks
+        document.querySelectorAll('a[href="https://yilmazemre.tr"]').forEach(link => {
+            link.addEventListener('click', function() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'click', {
+                        event_category: 'Developer',
+                        event_label: 'yilmazemre.tr',
+                        value: 1
+                    });
+                }
             });
         });
     });

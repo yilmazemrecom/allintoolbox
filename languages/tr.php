@@ -198,11 +198,35 @@ return [
     'age_next_birthday_days' => 'Sonraki doğum gününe kalan gün sayısı',
 
     // Kredi Hesaplayıcı
-    'loan_calculator_title' => 'Kredi Hesaplayıcı',
+    'loan_title' => 'Kredi Hesaplayıcı',
+    'breadcrumb_loan_tools' => 'Finans',
     'loan_calculator_description' => 'Kredi taksit ve faiz hesaplama aracı. Kredi tutarı, faiz oranı ve vade bilgilerini girerek aylık taksitlerinizi hesaplayın.',
     'loan_principal' => 'Kredi Tutarı (₺)',
     'loan_rate' => 'Yıllık Faiz Oranı (%)',
     'loan_months' => 'Vade (Ay)',
     'loan_calculate' => 'Kredi Hesapla',
     'loan_error' => 'Lütfen geçerli bir kredi tutarı girin!',
+
+    // kalori hesaplayıcı
+    'calorie_title' => 'Kalori Hesaplayıcı',
+    'calorie_calculator_description' => 'Günlük kalori ihtiyacınızı hesaplayın. Yaş, cinsiyet, kilo, boy ve aktivite seviyenizi girerek ihtiyacınız olan kalori miktarını öğrenin.',
+    'calorie_age' => 'Yaş',
+    'calorie_gender' => 'Cinsiyet',
+    'calorie_weight' => 'Kilo (kg)',
+    'calorie_height' => 'Boy (cm)',
+    'calorie_activity_level' => 'Aktivite Seviyesi',
+    'calorie_goal' => 'Hedef',
+    'calorie_calculate' => 'Kaloriyi Hesapla',
+    'calorie_result' => 'Kalori Sonucu',
+    'calorie_error' => 'Lütfen geçerli bir değer girin!',
+
+    // kolor converter
+    'color_title' => 'Renk Çevirici',
+
+    //password generator
+    'password_title' => 'Şifre Üretici',
+
+    // Text Analyzer
+    'text_title' => 'Metin Analiz Aracı',
+    
 ];

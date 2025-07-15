@@ -5,6 +5,11 @@ session_start();
 require_once '../config/config.php';
 require_once '../config/functions.php';
 
+// URL helpers'ı yükle
+if (file_exists('../config/url-helpers.php')) {
+    require_once '../config/url-helpers.php';
+}
+
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
 
@@ -148,9 +153,9 @@ include '../includes/header.php';
         <!-- Breadcrumb -->
         <?php
         $breadcrumbItems = [
-            ['title' => ($currentLang === 'tr') ? 'Ana Sayfa' : 'Home', 'url' => '/?lang=' . $currentLang],
-            ['title' => __('breadcrumb_health_tools'), 'url' => '/' . 'pages/category.php?category=health'],
-            ['title' => $pageTitle]
+            ['title' => __('breadcrumb_home'), 'url' => '/' . $currentLang . '/'],
+            ['title' => __('category_utility'), 'url' => function_exists('getCategoryCleanUrl') ? getCategoryCleanUrl('utility', $currentLang) : '/pages/category.php?category=utility&lang=' . $currentLang],
+            ['title' => __('calorie_title')]
         ];
         echo generateBreadcrumb($breadcrumbItems);
         ?>
@@ -491,43 +496,36 @@ include '../includes/header.php';
         <!-- Related Tools -->
         <div class="row mt-4">
             <div class="col-12">
-                <h4><i class="fas fa-link"></i> 
-                    <?php echo ($currentLang === 'tr') ? 'İlgili Araçlar' : 'Related Tools'; ?>
-                </h4>
+                <h4><i class="fas fa-link"></i> <?php echo __('related_tools'); ?></h4>
                 <div class="row">
-                    <?php
-                    $relatedTools = [
-                        [
-                            'name' => ($currentLang === 'tr') ? 'BMI Hesaplayıcı' : 'BMI Calculator',
-                            'description' => ($currentLang === 'tr') ? 'Vücut kitle indeksi hesaplama' : 'Calculate body mass index',
-                            'url' => '/tools/bmi-calculator.php?lang=' . $currentLang,
-                            'icon' => 'fas fa-weight'
-                        ],
-                        [
-                            'name' => ($currentLang === 'tr') ? 'Yaş Hesaplayıcı' : 'Age Calculator',
-                            'description' => ($currentLang === 'tr') ? 'Doğum tarihinizden yaşınızı hesaplayın' : 'Calculate age from birth date',
-                            'url' => '/tools/age-calculator.php?lang=' . $currentLang,
-                            'icon' => 'fas fa-birthday-cake'
-                        ]
-                    ];
+
+                <?php
+                $relatedTools = ['age-calculator', 'bmi-calculator'];
+                foreach ($relatedTools as $toolId):
+                    // Clean URLs kullan varsa
+                    if (function_exists('getToolInfoWithCleanUrl')) {
+                        $toolInfo = getToolInfoWithCleanUrl($toolId, $currentLang);
+                    } else {
+                        $toolInfo = getToolInfo($toolId, $currentLang);
+                    }
                     
-                    foreach ($relatedTools as $tool): ?>
+                    if ($toolInfo):
+                ?>
                         <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h6 class="card-title">
-                                        <i class="<?php echo $tool['icon']; ?>"></i> 
-                                        <?php echo $tool['name']; ?>
-                                    </h6>
-                                    <p class="card-text"><?php echo $tool['description']; ?></p>
-                                    <a href="<?php echo $tool['url']; ?>" class="btn btn-outline-primary btn-sm">
-                                        <i class="fas fa-arrow-right"></i> 
-                                        <?php echo ($currentLang === 'tr') ? 'Kullan' : 'Use'; ?>
+                                    <h6 class="card-title"><?php echo $toolInfo['name']; ?></h6>
+                                    <p class="card-text"><?php echo $toolInfo['description']; ?></p>
+                                    <a href="<?php echo $toolInfo['url']; ?>" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-arrow-right"></i> <?php echo __('use_tool'); ?>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
+                    <?php 
+                        endif;
+                    endforeach; 
+                    ?>
                 </div>
             </div>
         </div>
