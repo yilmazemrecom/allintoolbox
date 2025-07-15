@@ -1,5 +1,5 @@
 <?php
-// tools/text-analyzer.php - TAM VERSİYON
+// tools/text-analyzer.php - TAM VERSİYON - FIXED
 session_start();
 
 require_once '../config/config.php';
@@ -60,16 +60,23 @@ function analyzeText($text) {
         $wordArray = preg_split('/\s+/', trim($text), -1, PREG_SPLIT_NO_EMPTY);
     }
     
-    // En uzun ve en kısa kelime
+    // En uzun ve en kısa kelime (NULL kontrollü)
     $longestWord = '';
     $shortestWord = '';
     if (!empty($wordArray)) {
         $longestWord = array_reduce($wordArray, function($a, $b) {
+            // NULL kontrolleri ekle
+            $a = $a ?? '';
+            $b = $b ?? '';
             return mb_strlen($a, 'UTF-8') > mb_strlen($b, 'UTF-8') ? $a : $b;
-        });
+        }, ''); // İlk değer olarak boş string ver
+        
         $shortestWord = array_reduce($wordArray, function($a, $b) {
+            // NULL kontrolleri ekle
+            $a = $a ?? '';
+            $b = $b ?? '';
             return mb_strlen($a, 'UTF-8') < mb_strlen($b, 'UTF-8') ? $a : $b;
-        });
+        }, $wordArray[0] ?? ''); // İlk kelimeyi başlangıç değeri olarak ver
     }
     
     // Okuma süreleri (farklı hızlar)
@@ -91,7 +98,7 @@ function analyzeText($text) {
         
         // Çok kısa kelimeleri filtrele (2 karakterden az)
         $words_for_freq = array_filter($words_for_freq, function($word) {
-            return mb_strlen($word, 'UTF-8') >= 2;
+            return $word !== null && mb_strlen($word, 'UTF-8') >= 2;
         });
         
         $wordFreq = array_count_values($words_for_freq);

@@ -38,3 +38,5 @@ Order allow,deny
 Deny from all
 </Files>
 
+# Sitemap.xml yönlendirmesi
+RewriteRule ^sitemap\.xml$ /sitemap.php [L]
