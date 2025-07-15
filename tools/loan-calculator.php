@@ -1,5 +1,5 @@
 <?php
-// tools/loan-calculator.php - TAM VERSİYON
+// tools/loan-calculator.php - TAM VERSİYON - FIXED
 session_start();
 
 require_once '../config/config.php';
@@ -429,10 +429,84 @@ include '../includes/header.php';
         <!-- Ad Space -->
         <?php echo renderAdSpace('content', 'large'); ?>
 
-        </div>
     </div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<script>
+// Loan Calculator specific JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const currentLang = '<?php echo $currentLang; ?>';
+    
+    // Track tool usage
+    if (typeof AllInToolbox !== 'undefined') {
+        AllInToolbox.analytics.trackEvent('Tool', 'View', 'Loan Calculator');
+        
+        // Add to recent tools
+        const toolName = currentLang === 'tr' ? 'Kredi Hesaplayıcı' : 'Loan Calculator';
+        const toolUrl = '/tools/loan-calculator.php?lang=' + currentLang;
+        AllInToolbox.storage.addRecentTool('loan-calculator', toolName, toolUrl);
+    }
+});
+
+// Update loan defaults based on selected type
+function updateLoanDefaults() {
+    const typeSelect = document.getElementById('loan_type');
+    const rateInput = document.getElementById('rate');
+    const monthsInput = document.getElementById('months');
+    
+    const selectedOption = typeSelect.options[typeSelect.selectedIndex];
+    const defaultRate = selectedOption.getAttribute('data-rate');
+    const maxTerm = selectedOption.getAttribute('data-max-term');
+    
+    // Update placeholder values
+    rateInput.placeholder = defaultRate;
+    monthsInput.setAttribute('max', maxTerm);
+    
+    // Auto-fill if empty
+    if (!rateInput.value) {
+        rateInput.value = defaultRate;
+    }
+}
+
+// Set example values
+function setExample(amount, rate, months, type) {
+    document.getElementById('principal').value = amount;
+    document.getElementById('rate').value = rate;
+    document.getElementById('months').value = months;
+    document.getElementById('loan_type').value = type;
+}
+
+// Copy result
+function copyResult() {
+    <?php if ($result): ?>
+    const resultText = 
+        '<?php echo ($currentLang === 'tr') ? 'KREDİ HESAPLAMA SONUCU' : 'LOAN CALCULATION RESULT'; ?>\n' +
+        '<?php echo str_repeat('=', 30); ?>\n\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Aylık Taksit: ' : 'Monthly Payment: '; ?><?php echo number_format($result['monthly_payment'], 2); ?> <?php echo ($currentLang === 'tr') ? '₺' : '$'; ?>\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Toplam Ödeme: ' : 'Total Payment: '; ?><?php echo number_format($result['total_payment'], 0); ?> <?php echo ($currentLang === 'tr') ? '₺' : '$'; ?>\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Toplam Faiz: ' : 'Total Interest: '; ?><?php echo number_format($result['total_interest'], 0); ?> <?php echo ($currentLang === 'tr') ? '₺' : '$'; ?>\n\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Kredi Detayları:' : 'Loan Details:'; ?>\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Kredi Türü: ' : 'Loan Type: '; ?><?php echo $result['loan_type_name']; ?>\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Ana Para: ' : 'Principal: '; ?><?php echo number_format($result['principal'], 0); ?> <?php echo ($currentLang === 'tr') ? '₺' : '$'; ?>\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Faiz Oranı: %' : 'Interest Rate: %'; ?><?php echo $result['rate']; ?>\n' +
+        '<?php echo ($currentLang === 'tr') ? 'Vade: ' : 'Term: '; ?><?php echo $result['months']; ?> <?php echo ($currentLang === 'tr') ? 'ay' : 'months'; ?>';
+    
+    if (typeof AllInToolbox !== 'undefined') {
+        AllInToolbox.utils.copyToClipboard(resultText);
+    } else {
+        navigator.clipboard.writeText(resultText).then(() => {
+            alert('<?php echo ($currentLang === 'tr') ? 'Sonuç kopyalandı!' : 'Result copied!'; ?>');
+        });
+    }
+    <?php endif; ?>
+}
+
+<?php if ($result): ?>
+// Track successful calculation
+if (typeof AllInToolbox !== 'undefined') {
+    AllInToolbox.analytics.trackEvent('Tool', 'Calculate', 'Loan Calculator');
+}
+<?php endif; ?>
+</script>
 
 <?php include '../includes/footer.php'; ?>
