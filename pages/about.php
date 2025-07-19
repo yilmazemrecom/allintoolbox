@@ -5,6 +5,12 @@ session_start();
 require_once '../config/config.php';
 require_once '../config/functions.php';
 
+// URL helpers'ı yükle
+if (file_exists('../config/url-helpers.php')) {
+    require_once '../config/url-helpers.php';
+}
+
+
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
 
@@ -284,33 +290,7 @@ include '../includes/header.php';
             </div>
         </div>
 
-        <!-- Contact CTA -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card border-0 shadow-sm text-center">
-                    <div class="card-body p-5">
-                        <h3 class="mb-4">
-                            <?php echo ($currentLang === 'tr') ? 'Bizimle İletişime Geçin' : 'Get in Touch with Us'; ?>
-                        </h3>
-                        <p class="lead mb-4">
-                            <?php echo ($currentLang === 'tr') ? 
-                                'Sorularınız, önerileriniz veya yeni araç fikirleriniz mi var? Sizden haber almaktan memnuniyet duyarız!' :
-                                'Do you have questions, suggestions or new tool ideas? We would love to hear from you!'; ?>
-                        </p>
-                        <div class="d-flex justify-content-center gap-3 flex-wrap">
-                            <a href="/pages/contact.php?lang=<?php echo $currentLang; ?>" class="btn btn-primary btn-lg">
-                                <i class="fas fa-envelope me-2"></i>
-                                <?php echo ($currentLang === 'tr') ? 'İletişim' : 'Contact Us'; ?>
-                            </a>
-                            <a href="/?lang=<?php echo $currentLang; ?>" class="btn btn-outline-primary btn-lg">
-                                <i class="fas fa-tools me-2"></i>
-                                <?php echo ($currentLang === 'tr') ? 'Araçları Keşfet' : 'Explore Tools'; ?>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
     </div>
 </main>

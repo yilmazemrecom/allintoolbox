@@ -9,7 +9,8 @@ Allow: /tr/
 Allow: /en/
 Allow: /assets/
 
-# Sitemaps
+# SEO-Optimized Sitemaps
 Sitemap: https://allintoolbox.com/sitemap.xml
-Sitemap: https://allintoolbox.com/sitemap-tr.xml
-Sitemap: https://allintoolbox.com/sitemap-en.xml
+Sitemap: https://allintoolbox.com/sitemap.php
+Sitemap: https://allintoolbox.com/sitemap.php?type=tr
+Sitemap: https://allintoolbox.com/sitemap.php?type=en
