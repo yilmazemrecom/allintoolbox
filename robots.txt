@@ -1,24 +1,22 @@
-# AllInToolbox.com - Robots.txt
 User-agent: *
+Allow: /
 
-# Block old PHP URLs - redirect to clean URLs
-Disallow: /tools/
-Disallow: /pages/
-
-# Block admin and system files
+# Block access to sensitive directories
 Disallow: /config/
-Disallow: /includes/
-Disallow: /logs/
-Disallow: /cache/
-Disallow: /uploads/
+Disallow: /languages/
+Disallow: /assets/css/
+Disallow: /assets/js/
+Disallow: /vendor/
+Disallow: /.git/
+Disallow: /*.log$
 
-# Preferred clean URLs
-Allow: /tr/
-Allow: /en/
-Allow: /assets/
+# Allow images and static assets
+Allow: /assets/images/
+Allow: /favicon.ico
 
-# SEO-Optimized Sitemaps
+# Main sitemap reference - clean and simple
 Sitemap: https://allintoolbox.com/sitemap.xml
-Sitemap: https://allintoolbox.com/sitemap.php
-Sitemap: https://allintoolbox.com/sitemap.php?type=tr
-Sitemap: https://allintoolbox.com/sitemap.php?type=en
+
+# Optional: Add specific language sitemaps for better discovery
+# Sitemap: https://allintoolbox.com/sitemap_tr.xml
+# Sitemap: https://allintoolbox.com/sitemap_en.xml

@@ -111,9 +111,32 @@ RewriteRule ^(about|contact|privacy|terms)/?$ pages/$1.php [L]
 # SPECIAL ROUTES
 # ==========================================
 
-# Sitemap routing
+# ==========================================
+# SITEMAP ROUTES
+# ==========================================
+
+# Main sitemap.xml -> sitemap.php
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
-RewriteRule ^sitemap-([a-z]+)\.xml$ sitemap.php?type=$1 [L]
+
+# Language-specific sitemaps: sitemap_tr.xml, sitemap_en.xml
+RewriteRule ^sitemap_([a-z]{2})\.xml$ sitemap.php?type=$1 [L]
+
+# Backward compatibility for old sitemap URLs
+RewriteRule ^sitemap\.php\?type=([a-z]{2})$ sitemap_$1.xml [R=301,L]
+
+# ==========================================
+# ROBOTS.TXT (optional - if using dynamic robots.txt)
+# ==========================================
+
+# If you want to serve robots.txt dynamically
+# RewriteRule ^robots\.txt$ robots.php [L]
+
+# ==========================================
+# EXISTING RULES (keep your current rules below)
+# ==========================================
+
+# Your existing tool, category, and page rewrite rules go here...
+# Don't remove your existing RewriteRules
 
 # API endpoints (future)
 RewriteRule ^api/v1/(.*)$ api/v1/index.php?request=$1 [L]
