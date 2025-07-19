@@ -115,9 +115,6 @@ RewriteRule ^(about|contact|privacy|terms)/?$ pages/$1.php [L]
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^sitemap-([a-z]+)\.xml$ sitemap.php?type=$1 [L]
 
-# Robots.txt
-RewriteRule ^robots\.txt$ robots.php [L]
-
 # API endpoints (future)
 RewriteRule ^api/v1/(.*)$ api/v1/index.php?request=$1 [L]
 

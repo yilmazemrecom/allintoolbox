@@ -1,8 +1,16 @@
+# AllInToolbox.com - Robots.txt
+User-agent: *
+
 # Block old PHP URLs - redirect to clean URLs
-Disallow: /tools/*.php
-Disallow: /pages/*.php
-Disallow: /*?lang=*
-Disallow: /*?category=*
+Disallow: /tools/
+Disallow: /pages/
+
+# Block admin and system files
+Disallow: /config/
+Disallow: /includes/
+Disallow: /logs/
+Disallow: /cache/
+Disallow: /uploads/
 
 # Preferred clean URLs
 Allow: /tr/
