@@ -1,18 +1,7 @@
-<?php
-header('Content-Type: application/xml; charset=utf-8');
-header('X-Robots-Tag: noindex');
 
-$currentTime = date('Y-m-d\TH:i:s\Z');
-?>
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- SEO-Optimized Main Sitemap - AllInToolbox.com -->
+<!-- AllInToolbox.com -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Ana sitemap index -->
-  <sitemap>
-    <loc>https://allintoolbox.com/sitemap.php</loc>
-    <lastmod><?php echo $currentTime; ?></lastmod>
-  </sitemap>
-  
   <!-- Türkçe sitemap -->
   <sitemap>
     <loc>https://allintoolbox.com/sitemap.php?type=tr</loc>
@@ -25,3 +14,6 @@ $currentTime = date('Y-m-d\TH:i:s\Z');
     <lastmod><?php echo $currentTime; ?></lastmod>
   </sitemap>
 </sitemapindex>
+<?php
+*/
+?>
