@@ -5,6 +5,11 @@ session_start();
 require_once '../config/config.php';
 require_once '../config/functions.php';
 
+// URL helpers'ı yükle
+if (file_exists('../config/url-helpers.php')) {
+    require_once '../config/url-helpers.php';
+}
+
 $currentLang = $_GET['lang'] ?? detectLanguage();
 setLanguage($currentLang);
 
@@ -80,7 +85,7 @@ $categoryStyles = [
     'image' => [
         'icon' => 'fas fa-image',
         'color' => 'light',
-        'gradient' => 'linear-gradient(135deg, #0e4377ff 0%, #e9ecef 100%)',
+        'gradient' => 'linear-gradient(135deg, #0e4377ff 0%, #6397ccff 100%)',
         'description' => [
             'tr' => 'Görsel içerik oluşturma ve düzenleme araçları',
             'en' => 'Image creation and editing tools'
@@ -154,7 +159,9 @@ include '../includes/header.php';
                                             'unit-converter' => 'fas fa-ruler',
                                             'color-converter' => 'fas fa-palette',
                                             'text-analyzer' => 'fas fa-file-alt',
-                                            'age-calculator' => 'fas fa-birthday-cake'
+                                            'age-calculator' => 'fas fa-birthday-cake',
+                                            'image-converter' => 'fas fa-image',
+                                            
                                         ];
                                         $icon = $toolIcons[$toolId] ?? 'fas fa-tools';
                                         ?>
@@ -290,6 +297,7 @@ include '../includes/header.php';
                                     <p class="small text-muted"><?php echo ($currentLang === 'tr') ? 'Kayıt gerekmez' : 'No registration required'; ?></p>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

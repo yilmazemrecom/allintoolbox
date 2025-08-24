@@ -210,7 +210,13 @@ function getToolsByCategory($category, $lang = null) {
     
     foreach (TOOLS_LIST as $toolId => $tool) {
         if ($tool['category'] === $category) {
-            $toolInfo = getToolInfo($toolId, $lang);
+            // Clean URL varsa onu kullan, yoksa normal URL kullan
+            if (function_exists('getToolInfoWithCleanUrl')) {
+                $toolInfo = getToolInfoWithCleanUrl($toolId, $lang);
+            } else {
+                $toolInfo = getToolInfo($toolId, $lang);
+            }
+            
             if ($toolInfo) {
                 $categoryTools[$toolId] = $toolInfo;
             }

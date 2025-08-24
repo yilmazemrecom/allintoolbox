@@ -75,7 +75,8 @@ include '../includes/header.php';
                     'qr-code-generator' => ['icon' => 'fas fa-qrcode', 'color' => 'info'],
                     'currency-converter' => ['icon' => 'fas fa-exchange-alt', 'color' => 'warning'],
                     'password-generator' => ['icon' => 'fas fa-key', 'color' => 'danger'],
-                    'unit-converter' => ['icon' => 'fas fa-ruler', 'color' => 'secondary']
+                    'jpeg-to-png-converter' => ['icon' => 'fas fa-exchange-alt', 'color' => 'primary'],
+
                 ];
                 
                 foreach ($quickTools as $toolId => $toolStyle):
@@ -124,7 +125,8 @@ include '../includes/header.php';
                     'health' => ['icon' => 'fas fa-heartbeat', 'color' => 'danger'],
                     'web' => ['icon' => 'fas fa-code', 'color' => 'info'],
                     'converter' => ['icon' => 'fas fa-exchange-alt', 'color' => 'warning'],
-                    'utility' => ['icon' => 'fas fa-tools', 'color' => 'secondary']
+                    'utility' => ['icon' => 'fas fa-tools', 'color' => 'secondary'],
+                    'image' => ['icon' => 'fas fa-image', 'color' => 'light']
                 ];
                 
                 foreach (TOOL_CATEGORIES as $categoryId => $categoryNames):
@@ -187,7 +189,7 @@ include '../includes/header.php';
             <div class="container">
                 <h2 class="text-center mb-5 text-white"><?php echo ($currentLang === 'tr') ? 'Neden Bizi Seçmelisiniz?' : 'Why Choose Us?'; ?></h2>
                 <div class="row g-4">
-                    <div class="col-lg-3 col-md-6 col-12">
+                    <div class="col-lg-4 col-md-6 col-12">
                         <div class="text-center">
                             <div class="feature-icon mb-3">
                                 <i class="fas fa-shield-alt fa-3x text-success"></i>
@@ -196,16 +198,16 @@ include '../includes/header.php';
                             <p class="text-muted"><?php echo ($currentLang === 'tr') ? 'Verileriniz güvende' : 'Your data is safe'; ?></p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-12">
+                    <div class="col-lg-4 col-md-6 col-12">
                         <div class="text-center">
                             <div class="feature-icon mb-3">
-                                <i class="fas fa-mobile-alt fa-3x text-info"></i>
+                                <i class="fas fa-tachometer-alt fa-3x text-warning"></i>
                             </div>
-                            <h5 class="text-white"><?php echo ($currentLang === 'tr') ? 'Mobil Uyumlu' : 'Mobile Friendly'; ?></h5>
-                            <p class="text-muted"><?php echo ($currentLang === 'tr') ? 'Her cihazda mükemmel çalışır' : 'Works perfectly on any device'; ?></p>
+                            <h5 class="text-white"><?php echo ($currentLang === 'tr') ? 'Hızlı' : 'Fast'; ?></h5>
+                            <p class="text-muted"><?php echo ($currentLang === 'tr') ? 'Anında sonuç alın' : 'Get instant results'; ?></p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-12">
+                    <div class="col-lg-4 col-md-6 col-12">
                         <div class="text-center">
                             <div class="feature-icon mb-3">
                                 <i class="fas fa-heart fa-3x text-danger"></i>

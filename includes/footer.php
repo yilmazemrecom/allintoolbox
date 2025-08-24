@@ -237,16 +237,18 @@ if (file_exists(__DIR__ . '/../config/url-helpers.php')) {
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            display: none;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            align-items: center;
+            justify-content: center;
         `;
+        scrollToTopBtn.style.display = 'none';
         
         document.body.appendChild(scrollToTopBtn);
         
         // Show/hide scroll to top button
         window.addEventListener('scroll', function() {
             if (window.pageYOffset > 300) {
-                scrollToTopBtn.style.display = 'block';
+                scrollToTopBtn.style.display = 'flex';
             } else {
                 scrollToTopBtn.style.display = 'none';
             }
