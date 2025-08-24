@@ -1,0 +1,83 @@
+[24-Aug-2025 22:34:36 Europe/Istanbul] File upload attempt: Array
+(
+    [name] => enterapist_calisma-min.JPG
+    [full_path] => enterapist_calisma-min.JPG
+    [type] => image/jpeg
+    [tmp_name] => C:\Users\delos\AppData\Local\Temp\phpD95.tmp
+    [error] => 0
+    [size] => 1178463
+)
+
+[24-Aug-2025 22:34:36 Europe/Istanbul] Detected MIME type: image/jpeg
+[24-Aug-2025 22:34:36 Europe/Istanbul] Uploaded file type: image/jpeg
+[24-Aug-2025 22:34:36 Europe/Istanbul] Moving file from C:\Users\delos\AppData\Local\Temp\phpD95.tmp to ../uploads/1756064076_enterapist_calisma-min.jpg
+[24-Aug-2025 22:34:36 Europe/Istanbul] File moved successfully
+[24-Aug-2025 22:34:36 Europe/Istanbul] Starting conversion from ../uploads/1756064076_enterapist_calisma-min.jpg to ../uploads/1756064076_enterapist_calisma-min.png
+[24-Aug-2025 22:34:36 Europe/Istanbul] convertJpegToPng called with source: ../uploads/1756064076_enterapist_calisma-min.jpg, target: ../uploads/1756064076_enterapist_calisma-min.png
+[24-Aug-2025 22:34:39 Europe/Istanbul] PNG saved successfully to: ../uploads/1756064076_enterapist_calisma-min.png
+[24-Aug-2025 22:34:53 Europe/Istanbul] POST request received
+[24-Aug-2025 22:34:53 Europe/Istanbul] FILES: Array
+(
+    [jpeg_file] => Array
+        (
+            [name] => enterapist_calisma-min.JPG
+            [full_path] => enterapist_calisma-min.JPG
+            [type] => image/jpeg
+            [tmp_name] => C:\Users\delos\AppData\Local\Temp\php4D6E.tmp
+            [error] => 0
+            [size] => 1178463
+        )
+
+)
+
+[24-Aug-2025 22:34:53 Europe/Istanbul] File upload attempt: Array
+(
+    [name] => enterapist_calisma-min.JPG
+    [full_path] => enterapist_calisma-min.JPG
+    [type] => image/jpeg
+    [tmp_name] => C:\Users\delos\AppData\Local\Temp\php4D6E.tmp
+    [error] => 0
+    [size] => 1178463
+)
+
+[24-Aug-2025 22:34:53 Europe/Istanbul] Detected MIME type: image/jpeg
+[24-Aug-2025 22:34:53 Europe/Istanbul] Uploaded file type: image/jpeg
+[24-Aug-2025 22:34:53 Europe/Istanbul] Moving file from C:\Users\delos\AppData\Local\Temp\php4D6E.tmp to ../uploads/1756064093_enterapist_calisma-min.jpg
+[24-Aug-2025 22:34:53 Europe/Istanbul] File moved successfully
+[24-Aug-2025 22:34:53 Europe/Istanbul] Starting conversion from ../uploads/1756064093_enterapist_calisma-min.jpg to ../uploads/1756064093_enterapist_calisma-min.png
+[24-Aug-2025 22:34:53 Europe/Istanbul] convertJpegToPng called with source: ../uploads/1756064093_enterapist_calisma-min.jpg, target: ../uploads/1756064093_enterapist_calisma-min.png
+[24-Aug-2025 22:34:55 Europe/Istanbul] PNG saved successfully to: ../uploads/1756064093_enterapist_calisma-min.png
+[24-Aug-2025 22:35:56 Europe/Istanbul] POST request received
+[24-Aug-2025 22:35:56 Europe/Istanbul] FILES: Array
+(
+    [jpeg_file] => Array
+        (
+            [name] => fizyoterapi-1.jpg
+            [full_path] => fizyoterapi-1.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\Users\delos\AppData\Local\Temp\php4423.tmp
+            [error] => 0
+            [size] => 70990
+        )
+
+)
+
+[24-Aug-2025 22:35:56 Europe/Istanbul] File upload attempt: Array
+(
+    [name] => fizyoterapi-1.jpg
+    [full_path] => fizyoterapi-1.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\Users\delos\AppData\Local\Temp\php4423.tmp
+    [error] => 0
+    [size] => 70990
+)
+
+[24-Aug-2025 22:35:56 Europe/Istanbul] Detected MIME type: image/jpeg
+[24-Aug-2025 22:35:56 Europe/Istanbul] Uploaded file type: image/jpeg
+[24-Aug-2025 22:35:56 Europe/Istanbul] Moving file from C:\Users\delos\AppData\Local\Temp\php4423.tmp to ../uploads/1756064156_fizyoterapi-1.jpg
+[24-Aug-2025 22:35:56 Europe/Istanbul] File moved successfully
+[24-Aug-2025 22:35:56 Europe/Istanbul] Starting conversion from ../uploads/1756064156_fizyoterapi-1.jpg to ../uploads/1756064156_fizyoterapi-1.png
+[24-Aug-2025 22:35:56 Europe/Istanbul] convertJpegToPng called with source: ../uploads/1756064156_fizyoterapi-1.jpg, target: ../uploads/1756064156_fizyoterapi-1.png
+[24-Aug-2025 22:35:56 Europe/Istanbul] PNG saved successfully to: ../uploads/1756064156_fizyoterapi-1.png
+[24-Aug-2025 22:45:14 Europe/Istanbul] convertWebpToJpeg called with source: ../uploads/1756064714_enterapist_calisma.webp, target: ../uploads/1756064714_enterapist_calisma.jpg, quality: 90
+[24-Aug-2025 22:45:15 Europe/Istanbul] JPEG saved successfully to: ../uploads/1756064714_enterapist_calisma.jpg

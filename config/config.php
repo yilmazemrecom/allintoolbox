@@ -48,7 +48,8 @@ define('CURRENCY_API_URL', 'https://api.exchangerate-api.com/v4/latest/');
 
 // File Upload Settings
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
-define('ALLOWED_FILE_TYPES', ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'txt']);
+define('ALLOWED_FILE_TYPES', ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'txt', 'webp']);
+
 
 // Rate Limiting
 define('RATE_LIMIT_REQUESTS', 60); // requests per hour
@@ -71,6 +72,10 @@ define('TOOL_CATEGORIES', [
     'converter' => [
         'tr' => 'Çevirici Araçlar',
         'en' => 'Converter Tools'
+    ],
+    'image' => [
+        'tr' => 'Görsel Araçları',
+        'en' => 'Image Tools'
     ],
     'utility' => [
         'tr' => 'Pratik Araçlar',
@@ -191,6 +196,87 @@ define('TOOLS_LIST', [
             'keywords' => 'color converter, HEX RGB, color code, color picker'
         ]
     ],
+
+    // image tools
+
+    'jpeg-to-png-converter' => [
+        'category' => 'image',
+        'tr' => [
+            'name' => 'JPEG to PNG Dönüştürücü',
+            'description' => 'JPEG görsellerini PNG formatına ücretsiz dönüştürün. Kalite kaybı olmadan hızlı ve güvenli dönüşüm',
+            'keywords' => 'jpeg to png, görsel dönüştürücü, resim çevirici, jpeg png dönüştür'
+        ],
+        'en' => [
+            'name' => 'JPEG to PNG Converter',
+            'description' => 'Convert JPEG images to PNG format for free. Fast and secure conversion without quality loss',
+            'keywords' => 'jpeg to png, image converter, picture converter, jpeg png convert'
+        ]
+    ],
+    'png-to-jpeg-converter' => [
+        'category' => 'image',
+        'tr' => [
+            'name' => 'PNG to JPEG Dönüştürücü',
+            'description' => 'PNG görsellerini JPEG formatına ücretsiz dönüştürün. Kalite ayarlanabilir, hızlı dönüşüm',
+            'keywords' => 'png to jpeg, resim dönüştürücü, görsel çevirici, png jpeg dönüştür'
+        ],
+        'en' => [
+            'name' => 'PNG to JPEG Converter',
+            'description' => 'Convert PNG images to JPEG format for free. Adjustable quality, fast conversion',
+            'keywords' => 'png to jpeg, image converter, picture converter, png jpeg convert'
+        ]
+    ],
+    'webp-to-png-converter' => [
+        'category' => 'image',
+        'tr' => [
+            'name' => 'WebP to PNG Dönüştürücü',
+            'description' => 'WebP görsellerini PNG formatına ücretsiz dönüştürün. Şeffaflık korunur, kalite kaybı olmaz',
+            'keywords' => 'webp to png, görsel dönüştürücü, webp png çevirici, resim dönüştür'
+        ],
+        'en' => [
+            'name' => 'WebP to PNG Converter',
+            'description' => 'Convert WebP images to PNG format for free. Transparency preserved, no quality loss',
+            'keywords' => 'webp to png, image converter, webp png converter, picture convert'
+        ]
+    ],
+    'webp-to-jpeg-converter' => [
+        'category' => 'image',
+        'tr' => [
+            'name' => 'WebP to JPEG Dönüştürücü',
+            'description' => 'WebP görsellerini JPEG formatına ücretsiz dönüştürün. Kalite ayarlanabilir, uyumlu format',
+            'keywords' => 'webp to jpeg, resim dönüştürücü, webp jpeg çevirici, görsel dönüştür'
+        ],
+        'en' => [
+            'name' => 'WebP to JPEG Converter',
+            'description' => 'Convert WebP images to JPEG format for free. Adjustable quality, compatible format',
+            'keywords' => 'webp to jpeg, image converter, webp jpeg converter, picture convert'
+        ]
+    ],
+    'png-to-webp-converter' => [
+        'category' => 'image',
+        'tr' => [
+            'name' => 'PNG to WebP Dönüştürücü',
+            'description' => 'PNG görsellerini WebP formatına ücretsiz dönüştürün. %90 daha küçük dosya boyutu',
+            'keywords' => 'png to webp, resim sıkıştır, webp dönüştür, görsel küçült'
+        ],
+        'en' => [
+            'name' => 'PNG to WebP Converter',
+            'description' => 'Convert PNG images to WebP format for free. 90% smaller file size',
+            'keywords' => 'png to webp, compress image, webp convert, reduce image size'
+        ]
+    ],
+    'jpeg-to-webp-converter' => [
+        'category' => 'image',
+        'tr' => [
+            'name' => 'JPEG to WebP Dönüştürücü',
+            'description' => 'JPEG görsellerini WebP formatına ücretsiz dönüştürün. %85 daha küçük dosya boyutu',
+            'keywords' => 'jpeg to webp, resim sıkıştır, webp dönüştür, görsel optimize et'
+        ],
+        'en' => [
+            'name' => 'JPEG to WebP Converter',
+            'description' => 'Convert JPEG images to WebP format for free. 85% smaller file size',
+            'keywords' => 'jpeg to webp, compress image, webp convert, optimize image'
+        ]
+    ],
     
     // Utility Tools (2)
     'text-analyzer' => [
@@ -239,7 +325,7 @@ define('META_INFO', [
 
 // Analytics Configuration
 define('ANALYTICS', [
-    'google_analytics' => GOOGLE_ANALYTICS_ID,
+    'google_analytics' => 'G-YK2YRMR0R9',
     'google_adsense' => GOOGLE_ADSENSE_ID,
     'ezoic_enabled' => EZOIC_ENABLED,
     'track_events' => true,

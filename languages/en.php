@@ -158,6 +158,7 @@ return [
     'category_health' => 'Health',
     'category_web' => 'Web Tools',
     'category_converter' => 'Converter',
+    'category_image' => 'Image Tools',
     'category_utility' => 'Utility Tools',
     
     // Validation
@@ -239,6 +240,20 @@ level and personal data.',
 
     // color converter
     'color_title' => 'Color Converter',
+
+    // Image Converters
+    'jpeg_to_png_title' => 'JPEG to PNG Converter',
+    'jpeg_to_png_description' => 'Convert JPEG images to PNG format for free. Fast and secure conversion without quality loss.',
+    'png_to_jpeg_title' => 'PNG to JPEG Converter',
+    'png_to_jpeg_description' => 'Convert PNG images to JPEG format for free. Adjustable quality, fast conversion.',
+    'webp_to_png_title' => 'WebP to PNG Converter',
+    'webp_to_png_description' => 'Convert WebP images to PNG format for free. Transparency preserved, no quality loss.',
+    'webp_to_jpeg_title' => 'WebP to JPEG Converter',
+    'webp_to_jpeg_description' => 'Convert WebP images to JPEG format for free. Adjustable quality, compatible format.',
+    'png_to_webp_title' => 'PNG to WebP Converter',
+    'png_to_webp_description' => 'Convert PNG images to WebP format for free. 90% smaller file size.',
+    'jpeg_to_webp_title' => 'JPEG to WebP Converter',
+    'jpeg_to_webp_description' => 'Convert JPEG images to WebP format for free. 85% smaller file size.',
 
     // password generator
     'password_title' => 'Password Generator',

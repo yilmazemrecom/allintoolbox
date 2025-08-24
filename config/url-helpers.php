@@ -15,7 +15,13 @@ define('TOOL_URL_MAP', [
         'age-calculator' => 'yas-hesaplayici',
         'unit-converter' => 'olcu-birimi-cevirici',
         'color-converter' => 'renk-cevirici',
-        'calorie-calculator' => 'kalori-hesaplayici'
+        'calorie-calculator' => 'kalori-hesaplayici',
+        'jpeg-to-png-converter' => 'jpeg-png-cevirici',
+        'png-to-jpeg-converter' => 'png-jpeg-cevirici',
+        'webp-to-png-converter' => 'webp-png-cevirici',
+        'webp-to-jpeg-converter' => 'webp-jpeg-cevirici',
+        'png-to-webp-converter' => 'png-webp-cevirici',
+        'jpeg-to-webp-converter' => 'jpeg-webp-cevirici'
     ],
     'en' => [
         'bmi-calculator' => 'bmi-calculator',
@@ -27,7 +33,13 @@ define('TOOL_URL_MAP', [
         'age-calculator' => 'age-calculator',
         'unit-converter' => 'unit-converter',
         'color-converter' => 'color-converter',
-        'calorie-calculator' => 'calorie-calculator'
+        'calorie-calculator' => 'calorie-calculator',
+        'jpeg-to-png-converter' => 'jpeg-to-png-converter',
+        'png-to-jpeg-converter' => 'png-to-jpeg-converter',
+        'webp-to-png-converter' => 'webp-to-png-converter',
+        'webp-to-jpeg-converter' => 'webp-to-jpeg-converter',
+        'png-to-webp-converter' => 'png-to-webp-converter',
+        'jpeg-to-webp-converter' => 'jpeg-to-webp-converter'
     ]
 ]);
 
@@ -40,14 +52,16 @@ define('CATEGORY_URL_MAP', [
         'health' => 'saglik-araclari',
         'web' => 'web-araclari',
         'converter' => 'cevirici-araclar',
-        'utility' => 'pratik-araclar'
+        'utility' => 'pratik-araclar',
+        'image' => 'gorsel-araclar'
     ],
     'en' => [
         'finance' => 'finance-tools',
         'health' => 'health-tools',
         'web' => 'web-tools',
         'converter' => 'converter-tools',
-        'utility' => 'utility-tools'
+        'utility' => 'utility-tools',
+        'image' => 'image-tools'
     ]
 ]);
 

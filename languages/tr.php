@@ -158,6 +158,7 @@ return [
     'category_health' => 'Sağlık',
     'category_web' => 'Web Araçları',
     'category_converter' => 'Çevirici',
+    'category_image' => 'Görsel Araçları',
     'category_utility' => 'Pratik Araçlar',
     
     // Validasyon
@@ -222,6 +223,20 @@ return [
 
     // kolor converter
     'color_title' => 'Renk Çevirici',
+
+    // Image Converters
+    'jpeg_to_png_title' => 'JPEG to PNG Dönüştürücü',
+    'jpeg_to_png_description' => 'JPEG görsellerini PNG formatına ücretsiz dönüştürün. Kalite kaybı olmadan hızlı ve güvenli dönüşüm.',
+    'png_to_jpeg_title' => 'PNG to JPEG Dönüştürücü',
+    'png_to_jpeg_description' => 'PNG görsellerini JPEG formatına ücretsiz dönüştürün. Kalite ayarlanabilir, hızlı dönüşüm.',
+    'webp_to_png_title' => 'WebP to PNG Dönüştürücü',
+    'webp_to_png_description' => 'WebP görsellerini PNG formatına ücretsiz dönüştürün. Şeffaflık korunur, kalite kaybı olmaz.',
+    'webp_to_jpeg_title' => 'WebP to JPEG Dönüştürücü',
+    'webp_to_jpeg_description' => 'WebP görsellerini JPEG formatına ücretsiz dönüştürün. Kalite ayarlanabilir, uyumlu format.',
+    'png_to_webp_title' => 'PNG to WebP Dönüştürücü',
+    'png_to_webp_description' => 'PNG görsellerini WebP formatına ücretsiz dönüştürün. %90 daha küçük dosya boyutu.',
+    'jpeg_to_webp_title' => 'JPEG to WebP Dönüştürücü',
+    'jpeg_to_webp_description' => 'JPEG görsellerini WebP formatına ücretsiz dönüştürün. %85 daha küçük dosya boyutu.',
 
     //password generator
     'password_title' => 'Şifre Üretici',

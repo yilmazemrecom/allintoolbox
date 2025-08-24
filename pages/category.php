@@ -76,6 +76,15 @@ $categoryStyles = [
             'tr' => 'Günlük hayatı kolaylaştıran pratik araçlar',
             'en' => 'Practical tools that make daily life easier'
         ]
+    ],
+    'image' => [
+        'icon' => 'fas fa-image',
+        'color' => 'light',
+        'gradient' => 'linear-gradient(135deg, #0e4377ff 0%, #e9ecef 100%)',
+        'description' => [
+            'tr' => 'Görsel içerik oluşturma ve düzenleme araçları',
+            'en' => 'Image creation and editing tools'
+        ]
     ]
 ];
 

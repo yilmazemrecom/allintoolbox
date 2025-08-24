@@ -44,6 +44,12 @@ RewriteRule ^tr/yas-hesaplayici/?$ tools/age-calculator.php?lang=tr [L]
 RewriteRule ^tr/olcu-birimi-cevirici/?$ tools/unit-converter.php?lang=tr [L]
 RewriteRule ^tr/renk-cevirici/?$ tools/color-converter.php?lang=tr [L]
 RewriteRule ^tr/kalori-hesaplayici/?$ tools/calorie-calculator.php?lang=tr [L]
+RewriteRule ^tr/jpeg-png-cevirici/?$ tools/jpeg-to-png-converter.php?lang=tr [L]
+RewriteRule ^tr/png-jpeg-cevirici/?$ tools/png-to-jpeg-converter.php?lang=tr [L]
+RewriteRule ^tr/webp-png-cevirici/?$ tools/webp-to-png-converter.php?lang=tr [L]
+RewriteRule ^tr/webp-jpeg-cevirici/?$ tools/webp-to-jpeg-converter.php?lang=tr [L]
+RewriteRule ^tr/png-webp-cevirici/?$ tools/png-to-webp-converter.php?lang=tr [L]
+RewriteRule ^tr/jpeg-webp-cevirici/?$ tools/jpeg-to-webp-converter.php?lang=tr [L]
 
 # English tool URLs
 RewriteRule ^en/bmi-calculator/?$ tools/bmi-calculator.php?lang=en [L]
@@ -56,6 +62,12 @@ RewriteRule ^en/age-calculator/?$ tools/age-calculator.php?lang=en [L]
 RewriteRule ^en/unit-converter/?$ tools/unit-converter.php?lang=en [L]
 RewriteRule ^en/color-converter/?$ tools/color-converter.php?lang=en [L]
 RewriteRule ^en/calorie-calculator/?$ tools/calorie-calculator.php?lang=en [L]
+RewriteRule ^en/jpeg-to-png-converter/?$ tools/jpeg-to-png-converter.php?lang=en [L]
+RewriteRule ^en/png-to-jpeg-converter/?$ tools/png-to-jpeg-converter.php?lang=en [L]
+RewriteRule ^en/webp-to-png-converter/?$ tools/webp-to-png-converter.php?lang=en [L]
+RewriteRule ^en/webp-to-jpeg-converter/?$ tools/webp-to-jpeg-converter.php?lang=en [L]
+RewriteRule ^en/png-to-webp-converter/?$ tools/png-to-webp-converter.php?lang=en [L]
+RewriteRule ^en/jpeg-to-webp-converter/?$ tools/jpeg-to-webp-converter.php?lang=en [L]
 
 # ==========================================
 # CATEGORY PAGES - Clean URLs
@@ -67,6 +79,7 @@ RewriteRule ^tr/saglik-araclari/?$ pages/category.php?category=health&lang=tr [L
 RewriteRule ^tr/web-araclari/?$ pages/category.php?category=web&lang=tr [L]
 RewriteRule ^tr/cevirici-araclar/?$ pages/category.php?category=converter&lang=tr [L]
 RewriteRule ^tr/pratik-araclar/?$ pages/category.php?category=utility&lang=tr [L]
+RewriteRule ^tr/gorsel-araclar/?$ pages/category.php?category=image&lang=tr [L]
 
 # English categories
 RewriteRule ^en/finance-tools/?$ pages/category.php?category=finance&lang=en [L]
@@ -74,6 +87,7 @@ RewriteRule ^en/health-tools/?$ pages/category.php?category=health&lang=en [L]
 RewriteRule ^en/web-tools/?$ pages/category.php?category=web&lang=en [L]
 RewriteRule ^en/converter-tools/?$ pages/category.php?category=converter&lang=en [L]
 RewriteRule ^en/utility-tools/?$ pages/category.php?category=utility&lang=en [L]
+RewriteRule ^en/image-tools/?$ pages/category.php?category=image&lang=en [L]
 
 # ==========================================
 # STATIC PAGES - Clean URLs

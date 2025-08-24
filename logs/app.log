@@ -1,0 +1,15 @@
+[2025-08-24 22:35:25] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\pages\home.php on line 132
+[2025-08-24 22:35:25] [error] Error [2]: Trying to access array offset on value of type null in C:\laragon\www\allintoolbox\pages\home.php on line 146
+[2025-08-24 22:35:25] [error] Error [2]: Trying to access array offset on value of type null in C:\laragon\www\allintoolbox\pages\home.php on line 146
+[2025-08-24 22:35:25] [error] Error [2]: Trying to access array offset on value of type null in C:\laragon\www\allintoolbox\pages\home.php on line 175
+[2025-08-24 22:35:25] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\includes\footer.php on line 104
+[2025-08-24 22:35:28] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\includes\footer.php on line 104
+[2025-08-24 22:35:41] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\includes\footer.php on line 104
+[2025-08-24 22:35:56] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\includes\footer.php on line 104
+[2025-08-24 22:38:42] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\includes\footer.php on line 104
+[2025-08-24 22:39:53] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\includes\footer.php on line 104
+[2025-08-24 22:40:16] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\pages\home.php on line 132
+[2025-08-24 22:40:16] [error] Error [2]: Trying to access array offset on value of type null in C:\laragon\www\allintoolbox\pages\home.php on line 146
+[2025-08-24 22:40:16] [error] Error [2]: Trying to access array offset on value of type null in C:\laragon\www\allintoolbox\pages\home.php on line 146
+[2025-08-24 22:40:16] [error] Error [2]: Trying to access array offset on value of type null in C:\laragon\www\allintoolbox\pages\home.php on line 175
+[2025-08-24 22:40:16] [error] Error [2]: Undefined array key "image" in C:\laragon\www\allintoolbox\includes\footer.php on line 104

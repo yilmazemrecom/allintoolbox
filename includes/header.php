@@ -25,6 +25,16 @@ $baseUrl = '';
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#1a1d29">
     
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YK2YRMR0R9"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YK2YRMR0R9');
+    </script>
+
     <?php
     // Meta tags
     generateMetaTags($pageTitle ?? null, $pageDescription ?? null, $pageKeywords ?? null);
